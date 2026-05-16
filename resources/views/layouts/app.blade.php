@@ -170,8 +170,8 @@
 
         @media (max-width: 992px) { 
             .sidebar { 
-                width: clamp(288px, 78vw, 304px);
-                max-width: calc(100vw - 40px);
+                width: clamp(248px, 64vw, 272px);
+                max-width: calc(100vw - 72px);
                 height: 100vh !important;
                 height: 100dvh !important;
                 min-height: 100svh;
@@ -184,8 +184,8 @@
                 transform: translateX(0);
                 box-shadow: 14px 0 36px rgba(17, 24, 39, 0.22);
             }
-            .sidebar-brand { flex: 0 0 auto; padding: 0 16px 16px; margin-bottom: 4px; }
-            .sidebar-brand img { max-width: 100%; height: 38px; }
+            .sidebar-brand { flex: 0 0 auto; padding: 0 18px 18px; margin-bottom: 4px; }
+            .sidebar-brand img { max-width: 100%; height: 41px; }
             .sidebar-menu {
                 flex: 1 1 auto;
                 gap: 3px;
@@ -197,11 +197,11 @@
             }
             .sidebar-menu-item {
                 gap: 10px;
-                min-height: 40px;
+                min-height: 42px;
                 margin-right: 10px;
-                padding: 9px 14px;
+                padding: 10px 16px;
                 border-radius: 22px;
-                font-size: 13.5px;
+                font-size: 14.25px;
                 line-height: 1.25;
             }
             .sidebar-menu-item i {
@@ -236,17 +236,17 @@
 
         @media (max-width: 576px) { 
             .sidebar {
-                width: clamp(284px, 84vw, 304px);
-                max-width: calc(100vw - 32px);
+                width: clamp(236px, 68vw, 260px);
+                max-width: calc(100vw - 72px);
                 padding-top: 14px;
             }
-            .sidebar-brand { padding: 0 14px 14px; }
-            .sidebar-brand img { height: 36px; }
+            .sidebar-brand { padding: 0 16px 16px; }
+            .sidebar-brand img { height: 39px; }
             .sidebar-menu { gap: 2px; padding-left: 8px; }
             .sidebar-menu-item {
-                min-height: 38px;
-                padding: 8px 12px;
-                font-size: 13px;
+                min-height: 40px;
+                padding: 9px 14px;
+                font-size: 13.75px;
             }
             .topbar {
                 height: auto;
