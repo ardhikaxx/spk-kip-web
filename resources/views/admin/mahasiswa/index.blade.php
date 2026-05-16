@@ -36,15 +36,19 @@
                         <td>{{ $row->prodi ?? '-' }}</td>
                         <td>{{ $row->jurusan ?? '-' }}</td>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn-dots" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $row->nim }}"><i class="bi bi-pencil"></i> Edit</button>
-                                    <form method="POST" action="{{ route('mahasiswa.destroy', $row) }}" data-confirm-delete>
-                                        @csrf @method('DELETE')
-                                        <button class="dropdown-item text-danger" type="submit"><i class="bi bi-trash"></i> Hapus</button>
-                                    </form>
-                                </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn-spk-outline py-1 px-2" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalEdit{{ $row->nim }}"
+                                    title="Edit Data">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <form method="POST" action="{{ route('mahasiswa.destroy', $row) }}" data-confirm-delete>
+                                    @csrf @method('DELETE')
+                                    <button class="btn-spk-danger py-1 px-2" type="submit" title="Hapus Data">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
