@@ -1,7 +1,7 @@
 @php($role = auth()->user()->role ?? null)
 <aside class="sidebar">
     <div class="sidebar-brand">
-        <img src="{{ asset('assets/logo-spk-kip.png') }}" alt="SPK KIP-K" style="height: 45px; width: auto;">
+        <img src="{{ asset('assets/logo-spk-kip.png') }}" alt="SPK KIP-K">
     </div>
     <nav class="sidebar-menu">
         @if($role === 'admin')

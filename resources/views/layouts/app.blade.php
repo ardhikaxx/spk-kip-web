@@ -46,7 +46,7 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--neutral-50); color: var(--neutral-700); }
         .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: var(--color-primary); z-index: 1000; padding: 22px 18px; display: flex; flex-direction: column; }
         .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.15); margin-bottom: 14px; }
-        .sidebar-brand img { width: 44px; height: 44px; object-fit: contain; border-radius: 50%; background: #fff; padding: 3px; }
+        .sidebar-brand img { height: 45px; width: auto; object-fit: contain; }
         .brand-title { font-weight: 800; font-size: 18px; line-height: 1; }
         .brand-subtitle { color: rgba(255,255,255,.75); font-size: 9px; letter-spacing: 1.2px; font-weight: 700; margin-top: 5px; }
         .sidebar-menu { display: grid; gap: 2px; }
