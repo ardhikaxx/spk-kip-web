@@ -56,6 +56,9 @@
             background: #4669D6; z-index: 1001; padding: 28px 0; 
             display: flex; flex-direction: column; overflow-y: auto; 
         }
+        @supports (-webkit-touch-callout: none) {
+            .sidebar { height: -webkit-fill-available !important; }
+        }
         .sidebar::-webkit-scrollbar { width: 4px; }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding: 0 24px 30px; margin-bottom: 10px; border-bottom: 0; }
