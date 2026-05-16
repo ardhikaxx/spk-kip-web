@@ -122,15 +122,24 @@
         .pagination-spk li.active span { background: var(--color-primary); color: #fff; border-color: var(--color-primary); box-shadow: 0 4px 10px rgba(70, 105, 214, 0.25); }
         .pagination-spk li.disabled span { opacity: 0.5; cursor: not-allowed; }
 
+        /* Global Responsiveness */
+        @media (max-width: 576px) {
+            .card-spk { padding: 16px; border-radius: 0; }
+            .modal-content { border-radius: 0 !important; }
+            .btn-spk-primary, .btn-spk-outline { width: 100%; justify-content: center; margin-bottom: 8px; }
+            .table-spk { font-size: 12px; }
+            .table-spk thead th, .table-spk tbody td { padding: 8px; }
+        }
+
         /* Select2 Modal Fix */
         .select2-container--open { z-index: 9999 !important; }
 
         @media (max-width: 992px) { 
-            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
-            .sidebar.show { transform: translateX(0); }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; position: fixed; width: 260px; }
+            .sidebar.show { transform: translateX(0); box-shadow: 0 0 20px rgba(0,0,0,0.2); }
             .content-area { margin-left: 0; }
             .topbar { padding: 0 16px; }
-            .page-content { padding: 20px 16px; }
+            .page-content { padding: 16px; }
         }
 
         @media (min-width: 993px) { 
