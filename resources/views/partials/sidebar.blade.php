@@ -5,7 +5,7 @@
     </div>
     <nav class="sidebar-menu">
         @if($role === 'admin')
-            <a class="sidebar-menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="bi bi-activity"></i> Dashboard</a>
+            <a class="sidebar-menu-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="bi bi-graph-up"></i> Dashboard</a>
             <a class="sidebar-menu-item {{ request()->routeIs('mahasiswa.*') ? 'active' : '' }}" href="{{ route('mahasiswa.index') }}"><i class="bi bi-person-vcard"></i> Data Mahasiswa</a>
             <a class="sidebar-menu-item {{ request()->routeIs('kriteria.*') ? 'active' : '' }}" href="{{ route('kriteria.index') }}"><i class="bi bi-file-earmark-text"></i> Data Kriteria</a>
             <a class="sidebar-menu-item {{ request()->routeIs('sub-kriteria.*') ? 'active' : '' }}" href="{{ route('sub-kriteria.index') }}"><i class="bi bi-folder2-open"></i> Data Subkriteria</a>
