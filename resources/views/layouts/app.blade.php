@@ -159,12 +159,10 @@
 
         @media (max-width: 992px) { 
             .sidebar { 
-                transform: translateX(-100%); transition: transform 0.3s ease; 
-                position: fixed; top: 0; bottom: 0; left: 0; width: 260px; 
-                z-index: 1001;
-            }
-            .sidebar.show { transform: translateX(0); box-shadow: 0 0 20px rgba(0,0,0,0.2); }
-            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
+                width: var(--sidebar-width); height: 100vh !important; position: fixed !important; top: 0; left: 0; 
+                background: #4669D6; z-index: 1001; padding: 28px 0; 
+                display: flex; flex-direction: column; overflow-y: auto; 
+            }            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
             .sidebar-overlay.show { display: block; }
             .content-area { margin-left: 0; }
             .topbar { padding: 0 16px; }
