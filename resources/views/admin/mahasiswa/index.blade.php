@@ -39,6 +39,7 @@
                             <div class="dropdown">
                                 <button class="btn-dots" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
                                 <div class="dropdown-menu dropdown-menu-end">
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDetail{{ $row->nim }}"><i class="bi bi-eye"></i> Detail</button>
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $row->nim }}"><i class="bi bi-pencil"></i> Edit</button>
                                     <form method="POST" action="{{ route('mahasiswa.destroy', $row) }}" data-confirm-delete>
                                         @csrf @method('DELETE')
@@ -58,6 +59,29 @@
 </div>
 
 @foreach($mahasiswa as $row)
+    <!-- Detail Modal -->
+    <div class="modal fade modal-spk" id="modalDetail{{ $row->nim }}" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Mahasiswa: {{ $row->nama_mhs }}</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        @foreach($fields as $name => $label)
+                            <div class="col-md-6">
+                                <label class="fw-bold text-muted small">{{ $label }}</label>
+                                <div class="p-2 border rounded bg-light">{{ $row->{$name} ?? '-' }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
     <div class="modal fade modal-spk" id="modalEdit{{ $row->nim }}" tabindex="-1">
         <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
             <form class="modal-content" method="POST" action="{{ route('mahasiswa.update', $row) }}">
