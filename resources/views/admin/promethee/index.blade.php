@@ -16,10 +16,12 @@
                 <span>Bobot Kriteria</span>
                 <form method="GET"><select class="form-select" name="tahun" onchange="this.form.submit()">@forelse($years as $year)<option value="{{ $year }}" @selected($tahun == $year)>{{ $year }}</option>@empty<option value="{{ $tahun }}">{{ $tahun }}</option>@endforelse</select></form>
             </div>
-            <table class="table-spk">
-                <thead><tr><th>Kode</th><th>Nama Kriteria</th><th>Bobot</th></tr></thead>
-                <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ number_format((float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot), 4) }}</td></tr>@endforeach</tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table-spk">
+                    <thead><tr><th>Kode</th><th>Nama Kriteria</th><th>Bobot</th></tr></thead>
+                    <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ number_format((float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot), 4) }}</td></tr>@endforeach</tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="col-lg-4">

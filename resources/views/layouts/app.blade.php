@@ -51,10 +51,14 @@
             background: var(--neutral-50); 
             color: var(--neutral-700); 
         }
+        body { overflow-x: hidden; }
+        body.sidebar-open { overflow: hidden; }
         .sidebar { 
             width: var(--sidebar-width); height: 100vh !important; position: fixed; inset: 0 auto 0 0; 
             background: #4669D6; z-index: 1001; padding: 28px 0; 
-            display: flex; flex-direction: column; overflow-y: auto; 
+            display: flex; flex-direction: column; overflow-y: auto;
+            transition: transform .25s ease, box-shadow .25s ease;
+            will-change: transform;
         }
         @supports (-webkit-touch-callout: none) {
             .sidebar { height: -webkit-fill-available !important; }
@@ -63,12 +67,27 @@
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding: 0 24px 30px; margin-bottom: 10px; border-bottom: 0; }
         .sidebar-brand img { height: 45px; width: auto; object-fit: contain; }
-        .sidebar-menu { display: grid; gap: 8px; padding-left: 18px; }
+        .sidebar-menu { display: grid; align-content: start; gap: 8px; padding-left: 18px; }
         .sidebar-menu-item { color: #fff; display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-radius: 30px 0 0 30px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all .2s ease; }
         .sidebar-menu-item:hover { background: rgba(255,255,255, 0.1); color: #fff; }
         .sidebar-menu-item.active { background: #FFFFFF; color: #4669D6; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .sidebar-menu-item i { font-size: 18px; }
         .sidebar-footer { margin-top: auto; padding: 0 18px; border-top: 0; }
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.58);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .2s ease, visibility .2s ease;
+        }
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
         .content-area { margin-left: var(--sidebar-width); min-height: 100vh; }
         .topbar { height: var(--header-height); background: #fff; border-bottom: 1px solid var(--neutral-200); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 999; }
         .page-content { padding: 28px 32px; }
@@ -134,7 +153,7 @@
         .btn-toggle-password:hover { color: var(--color-primary); }
 
         /* Pagination SPK */
-        .pagination-spk { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; }
+        .pagination-spk { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; list-style: none; padding: 0; margin: 0; }
         .pagination-spk li a, .pagination-spk li span { 
             display: grid; place-items: center; width: 38px; height: 38px; 
             border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px;
@@ -146,36 +165,112 @@
         .pagination-spk li.disabled span { opacity: 0.5; cursor: not-allowed; }
 
         /* Global Responsiveness */
-        @media (max-width: 576px) { 
-            .sidebar { width: 85%; }
-            .card-spk { padding: 16px; border-radius: 0; }
-            .modal-content { border-radius: 0 !important; }
-            .btn-spk-primary, .btn-spk-outline { width: 100%; justify-content: center; margin-bottom: 8px; }
-            .table-spk { font-size: 12px; }
-            .table-spk thead th, .table-spk tbody td { padding: 8px; }
-        }
-
-        @media (min-width: 577px) and (max-width: 992px) {
-            .sidebar { width: 260px; }
-        }
-
         /* Select2 Modal Fix */
         .select2-container--open { z-index: 9999 !important; }
 
         @media (max-width: 992px) { 
             .sidebar { 
-                width: var(--sidebar-width); height: 100vh; height: 100dvh; position: fixed; top: 0; left: 0; 
-                background: #4669D6; z-index: 1001; padding: 28px 0; 
-                display: flex; flex-direction: column; overflow-y: auto; 
-            }            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
-            .sidebar-overlay.show { display: block; }
+                width: clamp(288px, 78vw, 304px);
+                max-width: calc(100vw - 40px);
+                height: 100vh !important;
+                height: 100dvh !important;
+                min-height: 100svh;
+                padding: 18px 0 0;
+                overflow: hidden;
+                transform: translateX(-105%);
+                box-shadow: none;
+            }
+            .sidebar.show {
+                transform: translateX(0);
+                box-shadow: 14px 0 36px rgba(17, 24, 39, 0.22);
+            }
+            .sidebar-brand { flex: 0 0 auto; padding: 0 16px 16px; margin-bottom: 4px; }
+            .sidebar-brand img { max-width: 100%; height: 38px; }
+            .sidebar-menu {
+                flex: 1 1 auto;
+                gap: 3px;
+                min-height: 0;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                padding-left: 10px;
+                padding-right: 0;
+            }
+            .sidebar-menu-item {
+                gap: 10px;
+                min-height: 40px;
+                margin-right: 10px;
+                padding: 9px 14px;
+                border-radius: 22px;
+                font-size: 13.5px;
+                line-height: 1.25;
+            }
+            .sidebar-menu-item i {
+                flex: 0 0 20px;
+                text-align: center;
+                font-size: 17px;
+            }
+            .sidebar-footer {
+                flex: 0 0 auto;
+                margin-top: 0;
+                padding: 8px 10px max(10px, env(safe-area-inset-bottom));
+                background: #4669D6;
+            }
+            .sidebar-footer .sidebar-menu-item { margin-right: 0; }
             .content-area { margin-left: 0; }
-            .topbar { padding: 0 16px; }
-            .page-content { padding: 16px; }
+            .topbar { padding: 0 18px; }
+            .page-content { padding: 18px; }
+            .card-spk { padding: 18px; }
+            .table-responsive {
+                margin-inline: -2px;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .table-spk { min-width: 720px; }
         }
 
         @media (min-width: 993px) { 
             .sidebar { transform: translateX(0); }
+            .sidebar-overlay { display: none; }
+        }
+
+        @media (max-width: 576px) { 
+            .sidebar {
+                width: clamp(284px, 84vw, 304px);
+                max-width: calc(100vw - 32px);
+                padding-top: 14px;
+            }
+            .sidebar-brand { padding: 0 14px 14px; }
+            .sidebar-brand img { height: 36px; }
+            .sidebar-menu { gap: 2px; padding-left: 8px; }
+            .sidebar-menu-item {
+                min-height: 38px;
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+            .topbar {
+                height: auto;
+                min-height: var(--header-height);
+                padding: 10px 14px;
+                gap: 12px;
+            }
+            .topbar > .d-flex:first-child { min-width: 0; }
+            .topbar .fw-bold { overflow-wrap: anywhere; }
+            .page-content { padding: 14px; }
+            .page-title { font-size: 19px; margin-bottom: 14px; }
+            .card-spk { padding: 14px; border-radius: var(--border-radius-sm); }
+            .stats-card { padding: 16px; }
+            .stats-value { font-size: 24px; }
+            .modal-content { border-radius: 0 !important; }
+            .btn-spk-primary, .btn-spk-outline { width: 100%; justify-content: center; margin-bottom: 8px; }
+            .table-spk { font-size: 12px; min-width: 680px; }
+            .table-spk thead th, .table-spk tbody td { padding: 8px; }
+            .pagination-spk li a, .pagination-spk li span {
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                font-size: 12px;
+            }
         }
     </style>
     @stack('styles')

@@ -75,10 +75,3 @@ Sistem ini dilengkapi dengan berbagai fitur unggulan untuk memudahkan Admin dan 
 | --- | --- | --- |
 | **Admin** | `admin@spkkip.test` | `password` |
 
----
-
-## 📸 Tampilan Sistem
-*(Tambahkan screenshot sistem Anda di sini untuk mempercantik dokumentasi)*
-
----
-Developed with ❤️ for **Politeknik Negeri Jember**

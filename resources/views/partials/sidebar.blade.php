@@ -1,5 +1,5 @@
 @php($role = auth()->user()->role ?? null)
-<aside class="sidebar">
+<aside class="sidebar" id="app-sidebar" aria-label="Menu navigasi utama">
     <div class="sidebar-brand">
         <img src="{{ asset('assets/logo-spk-kip.png') }}" alt="SPK KIP-K">
     </div>
