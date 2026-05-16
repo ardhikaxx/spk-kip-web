@@ -125,7 +125,17 @@
         /* Select2 Modal Fix */
         .select2-container--open { z-index: 9999 !important; }
 
-        @media (max-width: 768px) { .sidebar { position: static; width: 100%; height: auto; } .content-area { margin-left: 0; } .topbar { padding: 0 16px; } .page-content { padding: 20px 16px; } }
+        @media (max-width: 992px) { 
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+            .sidebar.show { transform: translateX(0); }
+            .content-area { margin-left: 0; }
+            .topbar { padding: 0 16px; }
+            .page-content { padding: 20px 16px; }
+        }
+
+        @media (min-width: 993px) { 
+            .sidebar { transform: translateX(0); }
+        }
     </style>
     @stack('styles')
 </head>

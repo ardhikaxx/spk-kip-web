@@ -1,7 +1,10 @@
 <header class="topbar">
-    <div>
-        <div class="fw-bold text-dark">@yield('title', 'Dashboard')</div>
-        <div class="text-muted small">Sistem Pendukung Keputusan KIP-K</div>
+    <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-primary d-lg-none" id="sidebar-toggle"><i class="bi bi-list"></i></button>
+        <div>
+            <div class="fw-bold text-dark">@yield('title', 'Dashboard')</div>
+            <div class="text-muted small">Sistem Pendukung Keputusan KIP-K</div>
+        </div>
     </div>
     <div class="d-flex align-items-center gap-3">
         <div class="d-flex align-items-center gap-2">
@@ -13,3 +16,8 @@
         </div>
     </div>
 </header>
+<script>
+    document.getElementById('sidebar-toggle').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('show');
+    });
+</script>
