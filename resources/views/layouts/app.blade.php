@@ -43,7 +43,14 @@
             --shadow-md: 0 8px 24px rgba(149, 157, 165, 0.08);
             --shadow-card: 0 2px 12px rgba(90, 129, 250, 0.08);
         }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--neutral-50); color: var(--neutral-700); }
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--neutral-50); 
+            color: var(--neutral-700); 
+        }
         .sidebar { 
             width: var(--sidebar-width); height: 100vh !important; position: fixed; inset: 0 auto 0 0; 
             background: #4669D6; z-index: 1001; padding: 28px 0; 
