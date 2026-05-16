@@ -241,6 +241,27 @@
             transform: translateY(0);
         }
 
+        .btn-toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--neutral-400);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .btn-toggle-password:hover {
+            color: var(--color-primary);
+        }
+
         .footer-text {
             text-align: center;
             margin-top: 32px;
@@ -330,7 +351,10 @@
                         <label class="form-label">Password</label>
                         <div class="input-wrapper">
                             <i class="bi bi-lock input-icon"></i>
-                            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                            <input type="password" name="password" class="form-control" placeholder="••••••••" required id="login-password">
+                            <button type="button" class="btn-toggle-password" data-target="login-password">
+                                <i class="bi bi-eye"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -353,5 +377,22 @@
             </div>
         </section>
     </div>
+    <script>
+        document.querySelectorAll('.btn-toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.replace('bi-eye', 'bi-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.replace('bi-eye-slash', 'bi-eye');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

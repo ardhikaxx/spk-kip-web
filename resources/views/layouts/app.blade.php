@@ -89,6 +89,27 @@
         .step-list { list-style: none; padding: 0; margin: 0; }
         .step-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--neutral-200); }
         .step-number { width: 26px; height: 26px; background: var(--color-primary-glow); color: var(--color-primary); border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+        
+        /* Password Toggle */
+        .password-group { position: relative; }
+        .btn-toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--neutral-400);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            z-index: 10;
+        }
+        .btn-toggle-password:hover { color: var(--color-primary); }
+
         @media (max-width: 768px) { .sidebar { position: static; width: 100%; height: auto; } .content-area { margin-left: 0; } .topbar { padding: 0 16px; } .page-content { padding: 20px 16px; } }
     </style>
     @stack('styles')
@@ -145,6 +166,21 @@
         @if($errors->any())
             SwalSpk.fire({ icon: 'error', title: 'Periksa Data', html: @json($errors->first()) });
         @endif
+
+        // Global Password Toggle Logic
+        $(document).on('click', '.btn-toggle-password', function() {
+            const targetId = $(this).data('target');
+            const passwordInput = document.getElementById(targetId);
+            const icon = $(this).find('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.removeClass('bi-eye').addClass('bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.removeClass('bi-eye-slash').addClass('bi-eye');
+            }
+        });
     </script>
     @stack('scripts')
 </body>

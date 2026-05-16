@@ -96,10 +96,13 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Masukkan password"
-                                required id="passwordInput">
-                            <small class="text-muted" id="passwordHelp" style="display: none;">Biarkan kosong jika tidak
-                                ingin mengubah password.</small>
+                            <div class="password-group">
+                                <input type="password" name="password" class="form-control" placeholder="Masukkan password" required id="passwordInput">
+                                <button type="button" class="btn-toggle-password" data-target="passwordInput">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            <small class="text-muted" id="passwordHelp" style="display: none;">Biarkan kosong jika tidak ingin mengubah password.</small>
                         </div>
                     </div>
                     <div class="modal-footer">
