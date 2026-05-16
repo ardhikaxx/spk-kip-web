@@ -312,7 +312,7 @@
                 
                 @yield('content')
             </div>
-        </section>Section content is defined in children.
+        </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
