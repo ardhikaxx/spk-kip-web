@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@spkkip.test'],
+            ['email' => 'admin@gmail.com'],
             [
                 'nama_lengkap' => 'Administrator SPK KIP-K',
                 'nomor_telepon' => '080000000001',
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'kaprodi@spkkip.test'],
+            ['email' => 'kaprodi@gmail.com'],
             [
                 'nama_lengkap' => 'Kaprodi',
                 'nomor_telepon' => '080000000002',

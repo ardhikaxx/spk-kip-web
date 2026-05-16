@@ -45,6 +45,6 @@
 
 <div class="footer-text">
     Gunakan kredensial default untuk demo:<br>
-    <code>admin@spkkip.test</code> / <code>password</code>
+    <code>admin@gmail.com</code> / <code>password</code>
 </div>
 @endsection
