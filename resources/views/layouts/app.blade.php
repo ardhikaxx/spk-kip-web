@@ -159,7 +159,7 @@
 
         @media (max-width: 992px) { 
             .sidebar { 
-                width: var(--sidebar-width); height: 100vh !important; position: fixed !important; top: 0; left: 0; 
+                width: var(--sidebar-width); height: 100vh; height: 100dvh; position: fixed; top: 0; left: 0; 
                 background: #4669D6; z-index: 1001; padding: 28px 0; 
                 display: flex; flex-direction: column; overflow-y: auto; 
             }            .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
