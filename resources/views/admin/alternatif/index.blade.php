@@ -6,7 +6,10 @@
 <div class="card-spk">
     <div class="card-header-spk">
         <form class="search-spk" method="GET"><i class="bi bi-search search-icon"></i><input name="search" value="{{ $search }}" placeholder="Cari nama mahasiswa..."></form>
-        <button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bi bi-plus-lg"></i> Tambah Alternatif</button>
+        <div class="d-flex gap-2">
+            <button class="btn-spk-outline" data-bs-toggle="modal" data-bs-target="#modalBulk"><i class="bi bi-layers-fill"></i> Tambah Semua</button>
+            <button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bi bi-plus-lg"></i> Tambah Alternatif</button>
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table-spk">
@@ -58,6 +61,18 @@
             </div>
         </div>
         <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Simpan Alternatif</button></div>
+    </form></div>
+</div>
+<div class="modal fade modal-spk" id="modalBulk" tabindex="-1">
+    <div class="modal-dialog"><form class="modal-content" method="POST" action="{{ route('alternatif.bulk') }}">
+        @csrf
+        <div class="modal-header"><h5 class="modal-title">Tambah Semua Alternatif</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
+        <div class="modal-body">
+            <p class="text-muted small">Fitur ini akan menyalin seluruh data mahasiswa menjadi alternatif untuk tahun yang dipilih. Jika alternatif sudah ada untuk tahun tersebut, data akan diperbarui.</p>
+            <label class="form-label">Tahun Seleksi</label>
+            <input class="form-control" type="number" name="tahun" value="{{ now()->year }}" required>
+        </div>
+        <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Proses Tambah Semua</button></div>
     </form></div>
 </div>
 @endsection

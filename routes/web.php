@@ -46,6 +46,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('bobot', [BobotController::class, 'store'])->name('bobot.store');
 
     Route::get('alternatif/mahasiswa/{nim}', [AlternatifController::class, 'getMahasiswaDetail'])->name('alternatif.mahasiswa');
+    Route::post('alternatif/bulk', [AlternatifController::class, 'bulkStore'])->name('alternatif.bulk');
     Route::resource('alternatif', AlternatifController::class)->except(['create', 'show', 'edit', 'update']);
 
     Route::get('promethee', [PrometheeController::class, 'index'])->name('promethee.index');

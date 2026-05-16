@@ -46,6 +46,26 @@ class AlternatifController extends Controller
         return back()->with('success', 'Alternatif berhasil disimpan.');
     }
 
+    public function bulkStore(Request $request, KipScoringService $scoring)
+    {
+        $request->validate([
+            'tahun' => ['required', 'integer', 'min:2000', 'max:2100'],
+        ]);
+
+        $tahun = $request->tahun;
+        $mahasiswaList = Mahasiswa::all();
+
+        foreach ($mahasiswaList as $mahasiswa) {
+            $scores = $scoring->scoreMahasiswa($mahasiswa);
+            Alternatif::updateOrCreate(
+                ['nim' => $mahasiswa->nim, 'tahun' => $tahun],
+                array_merge($scores, ['nim' => $mahasiswa->nim, 'tahun' => $tahun])
+            );
+        }
+
+        return back()->with('success', "Semua data mahasiswa berhasil ditambahkan sebagai alternatif tahun {$tahun}.");
+    }
+
     public function destroy(Alternatif $alternatif)
     {
         $alternatif->delete();
