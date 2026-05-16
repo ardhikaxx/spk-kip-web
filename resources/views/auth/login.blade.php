@@ -44,7 +44,7 @@
 
         /* Left Side: Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
             position: relative;
             display: flex;
             flex-direction: column;
