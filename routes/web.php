@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\PrometheeController;
 use App\Http\Controllers\Admin\SubKriteriaController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KaprodiController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('hasil', [HasilController::class, 'index'])->name('hasil.index');
     Route::get('hasil/pdf/{tahun}', [HasilController::class, 'downloadPdf'])->name('hasil.pdf');
+
+    Route::resource('users', UserController::class)->except(['create', 'show', 'edit']);
 });
 
 Route::prefix('kaprodi')->middleware(['auth', 'role:kaprodi'])->group(function () {

@@ -13,6 +13,7 @@
             <a class="sidebar-menu-item {{ request()->routeIs('alternatif.*') ? 'active' : '' }}" href="{{ route('alternatif.index') }}"><i class="bi bi-file-earmark-spreadsheet"></i> Kelola Alternatif</a>
             <a class="sidebar-menu-item {{ request()->routeIs('promethee.*') ? 'active' : '' }}" href="{{ route('promethee.index') }}"><i class="bi bi-calculator"></i> Hitung Promethee</a>
             <a class="sidebar-menu-item {{ request()->routeIs('hasil.*') ? 'active' : '' }}" href="{{ route('hasil.index') }}"><i class="bi bi-list-stars"></i> Hasil Seleksi</a>
+            <a class="sidebar-menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}"><i class="bi bi-person-gear"></i> Manajemen Pengguna</a>
         @else
             <a class="sidebar-menu-item {{ request()->routeIs('kaprodi.dashboard') ? 'active' : '' }}" href="{{ route('kaprodi.dashboard') }}"><i class="bi bi-house-door"></i> Dashboard</a>
         @endif
