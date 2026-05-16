@@ -158,7 +158,11 @@
         .select2-container--open { z-index: 9999 !important; }
 
         @media (max-width: 992px) { 
-            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; position: fixed; width: 260px; height: 100vh; z-index: 1001; }
+            .sidebar { 
+                transform: translateX(-100%); transition: transform 0.3s ease; 
+                position: fixed; top: 0; bottom: 0; left: 0; width: 260px; 
+                z-index: 1001;
+            }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 20px rgba(0,0,0,0.2); }
             .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
             .sidebar-overlay.show { display: block; }
