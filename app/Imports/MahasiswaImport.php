@@ -27,6 +27,10 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithUpserts
             }
         }
 
+        // Flexible mapping for Desil (Ensure it's integer)
+        $desilValue = $row['desil'] ?? $row['data_desil'] ?? null;
+        $desil = $desilValue ? (int) preg_replace('/[^0-9]/', '', $desilValue) : null;
+
         return new Mahasiswa([
             'nim' => (string) $nim,
             'nama_mhs' => $nama,
@@ -34,7 +38,7 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithUpserts
             'jurusan' => $row['jurusan'] ?? $row['fakultas'] ?? null,
             'kip' => $kip,
             'dtk' => $row['dtk'] ?? $row['dtks'] ?? $row['status_dtks'] ?? null,
-            'desil' => $row['desil'] ?? $row['data_desil'] ?? null,
+            'desil' => $desil,
             'kerja_ayah' => $row['kerja_ayah'] ?? $row['pekerjaan_ayah'] ?? null,
             'penghasilan_ayah' => $row['penghasilan_ayah'] ?? $row['gaji_ayah'] ?? null,
             'keterangan_ayah' => $row['keterangan_ayah'] ?? null,
