@@ -34,22 +34,26 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <div class="d-flex justify-content-center gap-2">
-                                    <button class="btn-spk-outline py-1 px-2" data-bs-toggle="modal"
-                                        data-bs-target="#modalUser" data-user='@json($user)'>
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
+                                <div class="dropdown">
+                                    <button class="btn-dots" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <button class="dropdown-item" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#modalUser"
+                                            data-user='@json($user)'>
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </button>
 
-                                    @if ($user->id_user !== auth()->id())
-                                        <form action="{{ route('users.destroy', $user->id_user) }}" method="POST"
-                                            data-confirm-delete>
+                                        @if($user->id_user !== auth()->id())
+                                        <form action="{{ route('users.destroy', $user->id_user) }}" method="POST" data-confirm-delete>
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn-spk-danger py-1 px-2">
-                                                <i class="bi bi-trash"></i>
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="bi bi-trash"></i> Hapus
                                             </button>
                                         </form>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </td>
                         </tr>
