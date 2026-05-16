@@ -1,59 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 Sistem Pendukung Keputusan Penerima Beasiswa KIP-K
+### Politeknik Negeri Jember - Metode PROMETHEE
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![SweetAlert2](https://img.shields.io/badge/SweetAlert2-FF5C5C?style=for-the-badge&logo=sweetalert2&logoColor=white)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Tentang Proyek
+**SPK KIP-K** adalah platform berbasis web yang dirancang untuk membantu proses seleksi penerima beasiswa KIP-Kuliah di **Politeknik Negeri Jember**. Sistem ini menggunakan metode **PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluation)** untuk memberikan hasil perankingan yang objektif, transparan, dan akurat berdasarkan berbagai kriteria yang telah ditentukan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fitur Utama
+Sistem ini dilengkapi dengan berbagai fitur unggulan untuk memudahkan Admin dan Kaprodi:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🛡️ Dashboard & Manajemen
+- **Modern Dashboard:** Visualisasi data ringkas bagi Admin dan Kaprodi.
+- **Manajemen Pengguna:** Admin dapat mengelola akun (tambah/edit/hapus) untuk Admin lain maupun Kaprodi.
+- **Data Mahasiswa:** Pengelolaan data calon penerima beasiswa (Import Excel didukung).
 
-## Learning Laravel
+### ⚙️ Engine SPK (PROMETHEE)
+- **Kriteria & Sub-Kriteria:** Pengaturan bobot dan kriteria yang fleksibel.
+- **Perhitungan Otomatis:** Proses kalkulasi metode PROMETHEE yang cepat dan transparan.
+- **Hasil Seleksi:** Laporan perankingan otomatis berdasarkan skor akhir tertinggi.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 💎 Antarmuka (UI/UX)
+- **Modern Login:** Desain login premium dengan gradasi warna indigo yang elegan.
+- **Pill-Shaped Sidebar:** Navigasi modern sesuai dengan standar UI masa kini.
+- **SweetAlert2 Integration:** Notifikasi interaktif untuk setiap aksi sistem.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🚀 Teknologi yang Digunakan
+- **Framework:** Laravel 11
+- **Styling:** Bootstrap 5 & Custom CSS (Vanilla)
+- **Database:** MySQL
+- **Library Tambahan:**
+  - SweetAlert2 (Notifikasi & Konfirmasi)
+  - Bootstrap Icons
+  - Chart.js (Visualisasi Dashboard)
+  - Maatwebsite Excel (Import Data)
 
-## Laravel Sponsors
+## 🛠️ Instalasi Lokal
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/ardhikaxx/spk-kip-web.git
+   cd spk-kip-web
+   ```
 
-### Premium Partners
+2. **Install Dependensi**
+   ```bash
+   composer install
+   npm install && npm run build
+   ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. **Konfigurasi Environment**
+   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi database Anda.
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Contributing
+4. **Migrasi & Seeder**
+   ```bash
+   php artisan migrate --seed
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Jalankan Server**
+   ```bash
+   php artisan serve
+   ```
 
-## Code of Conduct
+## 🔑 Akun Default (Demo)
+| Role | Email | Password |
+| --- | --- | --- |
+| **Admin** | `admin@spkkip.test` | `password` |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 📸 Tampilan Sistem
+*(Tambahkan screenshot sistem Anda di sini untuk mempercantik dokumentasi)*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+Developed with ❤️ for **Politeknik Negeri Jember**
