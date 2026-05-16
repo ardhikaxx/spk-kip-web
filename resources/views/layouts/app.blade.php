@@ -44,15 +44,15 @@
             --shadow-card: 0 2px 12px rgba(90, 129, 250, 0.08);
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--neutral-50); color: var(--neutral-700); }
-        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: var(--color-primary); z-index: 1000; padding: 22px 18px; display: flex; flex-direction: column; }
-        .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.15); margin-bottom: 14px; }
+        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: #4669D6; z-index: 1000; padding: 28px 0; display: flex; flex-direction: column; }
+        .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding: 0 24px 30px; margin-bottom: 10px; border-bottom: 0; }
         .sidebar-brand img { height: 45px; width: auto; object-fit: contain; }
-        .brand-title { font-weight: 800; font-size: 18px; line-height: 1; }
-        .brand-subtitle { color: rgba(255,255,255,.75); font-size: 9px; letter-spacing: 1.2px; font-weight: 700; margin-top: 5px; }
-        .sidebar-menu { display: grid; gap: 2px; }
-        .sidebar-menu-item { color: rgba(255,255,255,.78); display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all .2s ease; }
-        .sidebar-menu-item:hover, .sidebar-menu-item.active { background: rgba(255,255,255,.18); color: #fff; }
-        .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px; }
+        .sidebar-menu { display: grid; gap: 8px; padding-left: 18px; }
+        .sidebar-menu-item { color: #fff; display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-radius: 30px 0 0 30px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all .2s ease; }
+        .sidebar-menu-item:hover { background: rgba(255,255,255, 0.1); color: #fff; }
+        .sidebar-menu-item.active { background: #FFFFFF; color: #4669D6; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .sidebar-menu-item i { font-size: 18px; }
+        .sidebar-footer { margin-top: auto; padding: 0 18px; border-top: 0; }
         .content-area { margin-left: var(--sidebar-width); min-height: 100vh; }
         .topbar { height: var(--header-height); background: #fff; border-bottom: 1px solid var(--neutral-200); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 999; }
         .page-content { padding: 28px 32px; }
