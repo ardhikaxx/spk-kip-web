@@ -44,7 +44,9 @@
             --shadow-card: 0 2px 12px rgba(90, 129, 250, 0.08);
         }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--neutral-50); color: var(--neutral-700); }
-        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: #4669D6; z-index: 1000; padding: 28px 0; display: flex; flex-direction: column; }
+        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: #4669D6; z-index: 1000; padding: 28px 0; display: flex; flex-direction: column; overflow-y: auto; }
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
         .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding: 0 24px 30px; margin-bottom: 10px; border-bottom: 0; }
         .sidebar-brand img { height: 45px; width: auto; object-fit: contain; }
         .sidebar-menu { display: grid; gap: 8px; padding-left: 18px; }
