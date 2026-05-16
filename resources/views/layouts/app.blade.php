@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPK KIP-K | @yield('title', 'Dashboard')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <style>
+        :root {
+            --color-primary: #5A81FA;
+            --color-primary-hover: #476CD4;
+            --color-primary-active: #3654AD;
+            --color-primary-tint: #D6E0FF;
+            --color-primary-glow: #F3F6FF;
+            --color-pink: #FF63A5;
+            --color-pink-light: #FFD3E6;
+            --color-pink-glow: #FFF0F6;
+            --color-purple: #924FEF;
+            --color-purple-glow: #F7F3FE;
+            --color-cyan: #409CFF;
+            --color-cyan-glow: #F0F6FF;
+            --neutral-50: #EEF2F6;
+            --neutral-100: #FFFFFF;
+            --neutral-200: #E6ECF4;
+            --neutral-300: #CBD5E1;
+            --neutral-400: #A0AEC0;
+            --neutral-500: #718096;
+            --neutral-600: #4A5568;
+            --neutral-700: #2D3748;
+            --neutral-800: #1A202C;
+            --neutral-900: #111827;
+            --sidebar-width: 260px;
+            --header-height: 64px;
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 8px 24px rgba(149, 157, 165, 0.08);
+            --shadow-card: 0 2px 12px rgba(90, 129, 250, 0.08);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--neutral-50); color: var(--neutral-700); }
+        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; inset: 0 auto 0 0; background: var(--color-primary); z-index: 1000; padding: 22px 18px; display: flex; flex-direction: column; }
+        .sidebar-brand { display: flex; align-items: center; gap: 12px; color: #fff; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.15); margin-bottom: 14px; }
+        .sidebar-brand img { width: 44px; height: 44px; object-fit: contain; border-radius: 50%; background: #fff; padding: 3px; }
+        .brand-title { font-weight: 800; font-size: 18px; line-height: 1; }
+        .brand-subtitle { color: rgba(255,255,255,.75); font-size: 9px; letter-spacing: 1.2px; font-weight: 700; margin-top: 5px; }
+        .sidebar-menu { display: grid; gap: 2px; }
+        .sidebar-menu-item { color: rgba(255,255,255,.78); display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all .2s ease; }
+        .sidebar-menu-item:hover, .sidebar-menu-item.active { background: rgba(255,255,255,.18); color: #fff; }
+        .sidebar-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px; }
+        .content-area { margin-left: var(--sidebar-width); min-height: 100vh; }
+        .topbar { height: var(--header-height); background: #fff; border-bottom: 1px solid var(--neutral-200); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; position: sticky; top: 0; z-index: 999; }
+        .page-content { padding: 28px 32px; }
+        .page-title { font-size: 22px; font-weight: 800; color: var(--neutral-900); margin-bottom: 20px; }
+        .breadcrumb { margin: 0; font-size: 13px; }
+        .breadcrumb a { color: var(--color-primary); text-decoration: none; }
+        .card-spk, .stats-card { background: #fff; border: 1px solid var(--neutral-200); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); }
+        .card-spk { padding: 24px; }
+        .card-header-spk { font-size: 15px; font-weight: 800; color: var(--neutral-800); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--neutral-200); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .stats-card { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .stats-value { font-size: 28px; font-weight: 800; color: var(--neutral-900); line-height: 1; }
+        .stats-label { font-size: 13px; color: var(--neutral-500); margin-top: 5px; }
+        .stats-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; background: var(--color-primary-glow); color: var(--color-primary); }
+        .table-spk { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+        .table-spk thead th { background: var(--color-primary-glow); color: var(--color-primary-active); font-weight: 700; font-size: 13px; padding: 12px 16px; white-space: nowrap; }
+        .table-spk tbody td { padding: 13px 16px; vertical-align: middle; border-bottom: 1px solid var(--neutral-200); }
+        .table-spk tbody tr:nth-child(even) { background: var(--neutral-50); }
+        .table-spk tbody tr:hover { background: var(--color-primary-glow); }
+        .btn-spk-primary { background: var(--color-primary); color: white; border: 0; border-radius: 8px; padding: 9px 16px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 7px; text-decoration: none; }
+        .btn-spk-primary:hover { background: var(--color-primary-hover); color: white; }
+        .btn-spk-outline { background: transparent; color: var(--color-primary); border: 1.5px solid var(--color-primary); border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 7px; text-decoration: none; }
+        .btn-spk-danger { background: var(--color-pink-glow); color: var(--color-pink); border: 1px solid var(--color-pink-light); border-radius: 8px; padding: 7px 12px; font-weight: 700; }
+        .btn-dots { width: 34px; height: 34px; border: 1px solid var(--neutral-200); border-radius: 8px; background: var(--neutral-50); color: var(--neutral-600); }
+        .search-spk { position: relative; width: min(320px, 100%); }
+        .search-spk input { padding-left: 38px; height: 40px; border: 1.5px solid var(--neutral-300); border-radius: 8px; width: 100%; }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--neutral-400); }
+        .form-control, .form-select { border: 1.5px solid var(--neutral-300); border-radius: 8px; padding: 10px 13px; font-size: 14px; }
+        .form-control:focus, .form-select:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(90,129,250,.1); }
+        .badge-benefit, .badge-penerima, .badge-tersedia { background: var(--color-cyan-glow); color: #1E40AF; border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+        .badge-cost, .badge-tidak-penerima, .badge-tidak-tersedia { background: var(--color-pink-glow); color: #9D174D; border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+        .rank-badge-1 { background: linear-gradient(135deg,#FFD700,#FFA500); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 800; }
+        .modal-spk .modal-content { border: 0; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
+        .modal-spk .modal-header { background: var(--color-primary-glow); border-bottom: 1px solid var(--color-primary-tint); }
+        .step-list { list-style: none; padding: 0; margin: 0; }
+        .step-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--neutral-200); }
+        .step-number { width: 26px; height: 26px; background: var(--color-primary-glow); color: var(--color-primary); border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 12px; }
+        @media (max-width: 768px) { .sidebar { position: static; width: 100%; height: auto; } .content-area { margin-left: 0; } .topbar { padding: 0 16px; } .page-content { padding: 20px 16px; } }
+    </style>
+    @stack('styles')
+</head>
+<body>
+    @include('partials.sidebar')
+    <div class="content-area">
+        @include('partials.header')
+        <main class="page-content">
+            @include('partials.breadcrumb')
+            <h1 class="page-title">@yield('title')</h1>
+            @yield('content')
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        const SwalSpk = Swal.mixin({ confirmButtonColor: '#5A81FA', cancelButtonColor: '#A0AEC0' });
+        $('.select2').select2({ width: '100%', dropdownParent: $('.modal.show').length ? $('.modal.show') : $(document.body) });
+        document.querySelectorAll('[data-confirm-delete]').forEach((form) => {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                SwalSpk.fire({ title: 'Hapus Data?', text: 'Data yang dihapus tidak dapat dikembalikan.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', cancelButtonText: 'Batal' }).then((result) => {
+                    if (result.isConfirmed) form.submit();
+                });
+            });
+        });
+        @if(session('success'))
+            SwalSpk.fire({ icon: 'success', title: 'Berhasil', text: @json(session('success')), timer: 2200, showConfirmButton: false });
+        @endif
+        @if($errors->any())
+            SwalSpk.fire({ icon: 'error', title: 'Periksa Data', html: @json($errors->first()) });
+        @endif
+    </script>
+    @stack('scripts')
+</body>
+</html>
