@@ -122,6 +122,9 @@
         .pagination-spk li.active span { background: var(--color-primary); color: #fff; border-color: var(--color-primary); box-shadow: 0 4px 10px rgba(70, 105, 214, 0.25); }
         .pagination-spk li.disabled span { opacity: 0.5; cursor: not-allowed; }
 
+        /* Select2 Modal Fix */
+        .select2-container--open { z-index: 9999 !important; }
+
         @media (max-width: 768px) { .sidebar { position: static; width: 100%; height: auto; } .content-area { margin-left: 0; } .topbar { padding: 0 16px; } .page-content { padding: 20px 16px; } }
     </style>
     @stack('styles')
