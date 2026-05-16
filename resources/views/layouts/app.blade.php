@@ -146,12 +146,17 @@
         .pagination-spk li.disabled span { opacity: 0.5; cursor: not-allowed; }
 
         /* Global Responsiveness */
-        @media (max-width: 576px) {
+        @media (max-width: 576px) { 
+            .sidebar { width: 85%; }
             .card-spk { padding: 16px; border-radius: 0; }
             .modal-content { border-radius: 0 !important; }
             .btn-spk-primary, .btn-spk-outline { width: 100%; justify-content: center; margin-bottom: 8px; }
             .table-spk { font-size: 12px; }
             .table-spk thead th, .table-spk tbody td { padding: 8px; }
+        }
+
+        @media (min-width: 577px) and (max-width: 992px) {
+            .sidebar { width: 260px; }
         }
 
         /* Select2 Modal Fix */
