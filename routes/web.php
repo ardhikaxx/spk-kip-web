@@ -13,8 +13,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\KaprodiController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
-Route::redirect('/', '/login');
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->intended(Auth::user()->role === 'admin' ? route('admin.dashboard') : route('kaprodi.dashboard'));
+    }
+    
+    return redirect('/login');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

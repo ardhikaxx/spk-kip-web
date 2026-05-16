@@ -25,7 +25,14 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(Auth::user()->role === 'admin' ? route('admin.dashboard') : route('kaprodi.dashboard'));
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif (Auth::user()->role === 'kaprodi') {
+            return redirect()->route('kaprodi.dashboard');
+        } else {
+            Auth::logout();
+            return redirect()->route('login')->withErrors(['email' => 'Role tidak authorized.']);
+        }
     }
 
     public function logout(Request $request)
