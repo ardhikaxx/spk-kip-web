@@ -61,7 +61,14 @@
         .breadcrumb a { color: var(--color-primary); text-decoration: none; }
         .card-spk, .stats-card { background: #fff; border: 1px solid var(--neutral-200); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); }
         .card-spk { padding: 24px; }
-        .card-header-spk { font-size: 15px; font-weight: 800; color: var(--neutral-800); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--neutral-200); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .card-header-spk { 
+            font-size: 15px; font-weight: 800; color: var(--neutral-800); margin-bottom: 20px; padding-bottom: 14px; 
+            border-bottom: 1px solid var(--neutral-200); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; 
+        }
+        @media (max-width: 576px) {
+            .card-header-spk { flex-direction: column; align-items: stretch; gap: 16px; }
+            .card-header-spk .d-flex { flex-direction: column; width: 100%; }
+        }
         .stats-card { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
         .stats-value { font-size: 28px; font-weight: 800; color: var(--neutral-900); line-height: 1; }
         .stats-label { font-size: 13px; color: var(--neutral-500); margin-top: 5px; }
