@@ -109,8 +109,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        const SwalSpk = Swal.mixin({ confirmButtonColor: '#5A81FA', cancelButtonColor: '#A0AEC0' });
+        const SwalSpk = Swal.mixin({ confirmButtonColor: '#4669D6', cancelButtonColor: '#A0AEC0' });
         $('.select2').select2({ width: '100%', dropdownParent: $('.modal.show').length ? $('.modal.show') : $(document.body) });
+        
+        // Logout Confirmation
+        const logoutForm = document.getElementById('logout-form');
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                SwalSpk.fire({
+                    title: 'Keluar Akun?',
+                    text: 'Anda akan mengakhiri sesi pengerjaan ini.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Keluar',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) logoutForm.submit();
+                });
+            });
+        }
+
         document.querySelectorAll('[data-confirm-delete]').forEach((form) => {
             form.addEventListener('submit', (event) => {
                 event.preventDefault();

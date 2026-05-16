@@ -18,7 +18,7 @@
         @endif
     </nav>
     <div class="sidebar-footer">
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <button class="sidebar-menu-item w-100 border-0" style="background:transparent" type="submit">
                 <i class="bi bi-box-arrow-right"></i> Keluar dari akun
