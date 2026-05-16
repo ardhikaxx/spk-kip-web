@@ -17,7 +17,15 @@
     </div>
 </header>
 <script>
-    document.getElementById('sidebar-toggle').addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.toggle('show');
-    });
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function toggleSidebar() {
+        sidebar.classList.toggle('show');
+        overlay.classList.toggle('show');
+    }
+
+    sidebarToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar);
 </script>
