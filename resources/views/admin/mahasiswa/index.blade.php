@@ -31,10 +31,10 @@
                 @forelse($mahasiswa as $index => $row)
                     <tr>
                         <td>{{ $mahasiswa->firstItem() + $index }}</td>
-                        <td>{{ $row->nim }}</td>
-                        <td>{{ $row->nama_mhs }}</td>
-                        <td>{{ $row->prodi }}</td>
-                        <td>{{ $row->jurusan }}</td>
+                        <td>{{ $row->nim ?? '-' }}</td>
+                        <td>{{ $row->nama_mhs ?? '-' }}</td>
+                        <td>{{ $row->prodi ?? '-' }}</td>
+                        <td>{{ $row->jurusan ?? '-' }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn-dots" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
