@@ -48,18 +48,6 @@
                             </div>
                         </td>
                     </tr>
-                    <div class="modal fade modal-spk" id="modalEdit{{ $row->nim }}" tabindex="-1">
-                        <div class="modal-dialog modal-lg modal-fullscreen-sm-down"><form class="modal-content" method="POST" action="{{ route('mahasiswa.update', $row) }}">
-                            @csrf @method('PUT')
-                            <div class="modal-header"><h5 class="modal-title">Edit Mahasiswa</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
-                            <div class="modal-body"><div class="row g-3">
-                                @foreach($fields as $name => $label)
-                                    <div class="col-md-6"><label class="form-label">{{ $label }}</label><input class="form-control" name="{{ $name }}" value="{{ old($name, $row->{$name}) }}" {{ in_array($name, ['nim','nama_mhs']) ? 'required' : '' }}></div>
-                                @endforeach
-                            </div></div>
-                            <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Simpan</button></div>
-                        </form></div>
-                    </div>
                 @empty
                     <tr><td colspan="6" class="text-center text-muted">Belum ada data mahasiswa.</td></tr>
                 @endforelse
@@ -68,6 +56,34 @@
     </div>
     <div class="mt-3">{{ $mahasiswa->links() }}</div>
 </div>
+
+@foreach($mahasiswa as $row)
+    <div class="modal fade modal-spk" id="modalEdit{{ $row->nim }}" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
+            <form class="modal-content" method="POST" action="{{ route('mahasiswa.update', $row) }}">
+                @csrf @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Mahasiswa</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        @foreach($fields as $name => $label)
+                            <div class="col-md-6">
+                                <label class="form-label">{{ $label }}</label>
+                                <input class="form-control" name="{{ $name }}" value="{{ old($name, $row->{$name}) }}" {{ in_array($name, ['nim','nama_mhs']) ? 'required' : '' }}>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button>
+                    <button class="btn-spk-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endforeach
 
 <div class="modal fade modal-spk" id="modalCreate" tabindex="-1">
     <div class="modal-dialog modal-lg modal-fullscreen-sm-down"><form class="modal-content" method="POST" action="{{ route('mahasiswa.store') }}">
