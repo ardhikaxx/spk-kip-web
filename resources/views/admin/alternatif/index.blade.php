@@ -28,7 +28,7 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-3">{{ $alternatif->links() }}</div>
+    <div class="mt-3">{{ $alternatif->links('partials.pagination') }}</div>
 </div>
 
 <div class="modal fade modal-spk" id="modalCreate" tabindex="-1">

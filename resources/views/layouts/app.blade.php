@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
     <style>
         :root {
-            --color-primary: #5A81FA;
-            --color-primary-hover: #476CD4;
-            --color-primary-active: #3654AD;
-            --color-primary-tint: #D6E0FF;
-            --color-primary-glow: #F3F6FF;
+            --color-primary: #4669D6;
+            --color-primary-hover: #3b59b8;
+            --color-primary-active: #2e4694;
+            --color-primary-tint: #e9edfa;
+            --color-primary-glow: #f0f4ff;
             --color-pink: #FF63A5;
             --color-pink-light: #FFD3E6;
             --color-pink-glow: #FFF0F6;
@@ -109,6 +109,18 @@
             z-index: 10;
         }
         .btn-toggle-password:hover { color: var(--color-primary); }
+
+        /* Pagination SPK */
+        .pagination-spk { display: flex; gap: 8px; list-style: none; padding: 0; margin: 0; }
+        .pagination-spk li a, .pagination-spk li span { 
+            display: grid; place-items: center; width: 38px; height: 38px; 
+            border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px;
+            transition: all 0.2s ease; background: #fff; color: var(--neutral-600);
+            border: 1.5px solid var(--neutral-200);
+        }
+        .pagination-spk li a:hover { background: var(--color-primary-glow); color: var(--color-primary); border-color: var(--color-primary); }
+        .pagination-spk li.active span { background: var(--color-primary); color: #fff; border-color: var(--color-primary); box-shadow: 0 4px 10px rgba(70, 105, 214, 0.25); }
+        .pagination-spk li.disabled span { opacity: 0.5; cursor: not-allowed; }
 
         @media (max-width: 768px) { .sidebar { position: static; width: 100%; height: auto; } .content-area { margin-left: 0; } .topbar { padding: 0 16px; } .page-content { padding: 20px 16px; } }
     </style>

@@ -33,6 +33,6 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-3">{{ $mahasiswa->links() }}</div>
+    <div class="mt-3">{{ $mahasiswa->links('partials.pagination') }}</div>
 </div>
 @endsection
