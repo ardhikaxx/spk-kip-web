@@ -126,6 +126,8 @@
         .badge-benefit, .badge-penerima, .badge-tersedia { background: var(--color-cyan-glow); color: #1E40AF; border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
         .badge-cost, .badge-tidak-penerima, .badge-tidak-tersedia { background: var(--color-pink-glow); color: #9D174D; border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
         .rank-badge-1 { background: linear-gradient(135deg,#FFD700,#FFA500); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 800; }
+.rank-badge-2 { background: linear-gradient(135deg,#C0C0C0,#A8A8A8); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 800; }
+.rank-badge-3 { background: linear-gradient(135deg,#CD7F32,#B86B2D); color: #fff; width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 800; }
         .modal-spk .modal-content { border: 0; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.15); }
         .modal-spk .modal-header { background: var(--color-primary-glow); border-bottom: 1px solid var(--color-primary-tint); }
         .step-list { list-style: none; padding: 0; margin: 0; }
