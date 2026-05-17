@@ -5,10 +5,14 @@ namespace App\Imports;
 use App\Models\Mahasiswa;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class MahasiswaImport implements ToModel, WithHeadingRow, WithUpserts
+class MahasiswaImport implements ToModel, WithHeadingRow
 {
+    /**
+     * Count of duplicate rows skipped during import.
+     */
+    public int $duplicateCount = 0;
+
     public function model(array $row): ?Mahasiswa
     {
         // Flexible mapping for NIM
@@ -17,6 +21,12 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithUpserts
 
         // Flexible mapping for Nama
         $nama = $row['nama_mhs'] ?? $row['nama_mahasiswa'] ?? $row['nama'] ?? $row['nama_lengkap'] ?? '-';
+
+        // Check for duplicate by NIM or nama_mhs
+        if (Mahasiswa::where('nim', $nim)->orWhere('nama_mhs', $nama)->exists()) {
+            $this->duplicateCount++;
+            return null; // Skip this row
+        }
 
         // Flexible mapping for KIP / Jalur Seleksi
         $kip = $row['kip'] ?? null;
@@ -47,10 +57,5 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithUpserts
             'keterangan_ibu' => $row['keterangan_ibu'] ?? null,
             'prestasi' => $row['prestasi'] ?? $row['data_prestasi'] ?? 'Tidak ada',
         ]);
-    }
-
-    public function uniqueBy(): string
-    {
-        return 'nim';
     }
 }

@@ -35,13 +35,15 @@ class AlternatifController extends Controller
             'tahun' => ['required', 'integer', 'min:2000', 'max:2100'],
         ]);
 
+        // Check if alternatif already exists for this nim and tahun
+        if (Alternatif::where('nim', $data['nim'])->where('tahun', $data['tahun'])->exists()) {
+            return back()->with('error', 'Data alternatif untuk NIM ini dan tahun yang sama sudah ada.');
+        }
+
         $mahasiswa = Mahasiswa::findOrFail($data['nim']);
         $scores = $scoring->scoreMahasiswa($mahasiswa);
 
-        Alternatif::updateOrCreate(
-            ['nim' => $data['nim'], 'tahun' => $data['tahun']],
-            array_merge($scores, ['nim' => $data['nim'], 'tahun' => $data['tahun']])
-        );
+        Alternatif::create(array_merge($scores, ['nim' => $data['nim'], 'tahun' => $data['tahun']]));
 
         return back()->with('success', 'Alternatif berhasil disimpan.');
     }
@@ -54,16 +56,27 @@ class AlternatifController extends Controller
 
         $tahun = $request->tahun;
         $mahasiswaList = Mahasiswa::all();
+        $createdCount = 0;
+        $skippedCount = 0;
 
         foreach ($mahasiswaList as $mahasiswa) {
+            // Check if alternatif already exists for this nim and tahun
+            if (Alternatif::where('nim', $mahasiswa->nim)->where('tahun', $tahun)->exists()) {
+                $skippedCount++;
+                continue;
+            }
+
             $scores = $scoring->scoreMahasiswa($mahasiswa);
-            Alternatif::updateOrCreate(
-                ['nim' => $mahasiswa->nim, 'tahun' => $tahun],
-                array_merge($scores, ['nim' => $mahasiswa->nim, 'tahun' => $tahun])
-            );
+            Alternatif::create(array_merge($scores, ['nim' => $mahasiswa->nim, 'tahun' => $tahun]));
+            $createdCount++;
         }
 
-        return back()->with('success', "Semua data mahasiswa berhasil ditambahkan sebagai alternatif tahun {$tahun}.");
+        $successMessage = "Berhasil menambahkan {$createdCount} data mahasiswa sebagai alternatif tahun {$tahun}.";
+        if ($skippedCount > 0) {
+            $successMessage .= " {$skippedCount} data diabaikan karena sudah ada untuk tahun tersebut.";
+        }
+
+        return back()->with('success', $successMessage);
     }
 
     public function destroy(Alternatif $alternatif)

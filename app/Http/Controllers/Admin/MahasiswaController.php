@@ -47,9 +47,15 @@ class MahasiswaController extends Controller
     public function import(Request $request)
     {
         $request->validate(['file' => ['required', 'file', 'mimes:xlsx,xls,csv,txt']]);
-        Excel::import(new MahasiswaImport, $request->file('file'));
+        $import = new MahasiswaImport;
+        Excel::import($import, $request->file('file'));
 
-        return back()->with('success', 'Data mahasiswa berhasil diimpor.');
+        $successMessage = 'Data mahasiswa berhasil diimpor.';
+        if ($import->duplicateCount > 0) {
+            $successMessage .= " {$import->duplicateCount} data duplikat (NIM atau nama sudah ada) telah diabaikan.";
+        }
+
+        return back()->with('success', $successMessage);
     }
 
     public function template()
@@ -67,7 +73,7 @@ class MahasiswaController extends Controller
     {
         return $request->validate([
             'nim' => ['required', 'string', 'max:30', $ignoreNim ? "unique:tb_mahasiswa,nim,{$ignoreNim},nim" : 'unique:tb_mahasiswa,nim'],
-            'nama_mhs' => ['required', 'string', 'max:255'],
+            'nama_mhs' => ['required', 'string', 'max:255', $ignoreNim ? "unique:tb_mahasiswa,nama_mhs,{$ignoreNim},nim" : 'unique:tb_mahasiswa,nama_mhs'],
             'prodi' => ['nullable', 'string', 'max:255'],
             'jurusan' => ['nullable', 'string', 'max:255'],
             'kip' => ['nullable', 'string', 'max:255'],
