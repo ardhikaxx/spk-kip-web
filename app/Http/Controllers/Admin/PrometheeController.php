@@ -31,6 +31,9 @@ class PrometheeController extends Controller
 
     public function hitung(Request $request, PrometheeService $promethee)
     {
+        // Increase execution time limit for large calculations
+        ini_set('max_execution_time', 300); // 5 minutes
+
         $data = $request->validate([
             'tahun' => ['required', 'integer', 'min:2000', 'max:2100'],
             'quota' => ['nullable', 'integer', 'min:1'],

@@ -44,6 +44,24 @@ class MahasiswaController extends Controller
         return back()->with('success', 'Data mahasiswa berhasil dihapus.');
     }
 
+    public function destroyAll(Request $request)
+    {
+        $request->validate([
+            'nims' => ['required', 'string'],
+        ]);
+
+        $nims = json_decode($request->nims, true);
+        
+        if (!is_array($nims) || count($nims) === 0) {
+            return back()->with('error', 'Tidak ada data yang dipilih untuk dihapus.');
+        }
+
+        // Delete all selected mahasiswa
+        $deletedCount = Mahasiswa::whereIn('nim', $nims)->delete();
+
+        return back()->with('success', "{$deletedCount} data mahasiswa berhasil dihapus.");
+    }
+
     public function import(Request $request)
     {
         $request->validate(['file' => ['required', 'file', 'mimes:xlsx,xls,csv,txt']]);

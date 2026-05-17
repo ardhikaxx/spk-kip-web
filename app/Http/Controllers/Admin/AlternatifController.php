@@ -86,6 +86,24 @@ class AlternatifController extends Controller
         return back()->with('success', 'Alternatif berhasil dihapus.');
     }
 
+    public function destroyAll(Request $request)
+    {
+        $request->validate([
+            'ids' => ['required', 'string'],
+        ]);
+
+        $ids = json_decode($request->ids, true);
+        
+        if (!is_array($ids) || count($ids) === 0) {
+            return back()->with('error', 'Tidak ada data yang dipilih untuk dihapus.');
+        }
+
+        // Delete all selected alternatif
+        $deletedCount = Alternatif::whereIn('id_alternatif', $ids)->delete();
+
+        return back()->with('success', "{$deletedCount} data alternatif berhasil dihapus.");
+    }
+
     public function getMahasiswaDetail(string $nim, KipScoringService $scoring)
     {
         $mahasiswa = Mahasiswa::find($nim);

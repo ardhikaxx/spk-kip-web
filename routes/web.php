@@ -40,6 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('mahasiswa/template', [MahasiswaController::class, 'template'])->name('mahasiswa.template');
     Route::post('mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
     Route::resource('mahasiswa', MahasiswaController::class)->except(['create', 'show', 'edit']);
+    Route::delete('mahasiswa/deleteAll', [MahasiswaController::class, 'destroyAll'])->name('mahasiswa.destroyAll');
 
     Route::resource('kriteria', KriteriaController::class)
         ->parameters(['kriteria' => 'kriterium'])
@@ -55,6 +56,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('alternatif/mahasiswa/{nim}', [AlternatifController::class, 'getMahasiswaDetail'])->name('alternatif.mahasiswa');
     Route::post('alternatif/bulk', [AlternatifController::class, 'bulkStore'])->name('alternatif.bulk');
     Route::resource('alternatif', AlternatifController::class)->except(['create', 'show', 'edit', 'update']);
+    Route::delete('alternatif/deleteAll', [AlternatifController::class, 'destroyAll'])->name('alternatif.destroyAll');
 
     Route::get('promethee', [PrometheeController::class, 'index'])->name('promethee.index');
     Route::post('promethee/hitung', [PrometheeController::class, 'hitung'])->name('promethee.hitung');

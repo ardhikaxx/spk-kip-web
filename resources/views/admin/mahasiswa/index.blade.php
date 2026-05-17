@@ -22,14 +22,26 @@
             <a href="{{ route('mahasiswa.template') }}" class="btn-spk-outline"><i class="bi bi-download"></i> Template</a>
             <button class="btn-spk-outline" data-bs-toggle="modal" data-bs-target="#modalImport"><i class="bi bi-file-earmark-arrow-up"></i> Import Excel/CSV</button>
             <button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bi bi-plus-lg"></i> Tambah Data</button>
+            <button type="button" class="btn-spk-danger" id="btnDeleteSelected"><i class="bi bi-trash"></i> Hapus Terpilih</button>
         </div>
     </div>
     <div class="table-responsive">
         <table class="table-spk">
-            <thead><tr><th>No</th><th>NIM</th><th>Nama Mahasiswa</th><th>Program Studi</th><th>Jurusan</th><th>Aksi</th></tr></thead>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAll"></th>
+                    <th>No</th>
+                    <th>NIM</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Program Studi</th>
+                    <th>Jurusan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
             <tbody>
                 @forelse($mahasiswa as $index => $row)
                     <tr>
+                        <td><input type="checkbox" class="row-select" value="{{ $row->nim }}"></td>
                         <td>{{ $mahasiswa->firstItem() + $index }}</td>
                         <td>{{ $row->nim ?? '-' }}</td>
                         <td>{{ $row->nama_mhs ?? '-' }}</td>
@@ -50,7 +62,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="text-center text-muted">Belum ada data mahasiswa.</td></tr>
+                    <tr><td colspan="7" class="text-center text-muted">Belum ada data mahasiswa.</td></tr>
                 @endforelse
             </tbody>
         </table>
@@ -58,80 +70,61 @@
     <div class="mt-3">{{ $mahasiswa->links('partials.pagination') }}</div>
 </div>
 
-@foreach($mahasiswa as $row)
-    <!-- Detail Modal -->
-    <div class="modal fade modal-spk" id="modalDetail{{ $row->nim }}" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detail Mahasiswa: {{ $row->nama_mhs }}</h5>
-                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-3">
-                        @foreach($fields as $name => $label)
-                            <div class="col-md-6">
-                                <label class="fw-bold text-muted small">{{ $label }}</label>
-                                <div class="p-2 border rounded bg-light">{{ $row->{$name} ?? '-' }}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<form id="bulkDeleteForm" action="{{ route('mahasiswa.destroyAll') }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+    <input type="hidden" name="nims" id="bulkDeleteNims">
+</form>
 
-    <!-- Edit Modal -->
-    <div class="modal fade modal-spk" id="modalEdit{{ $row->nim }}" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-fullscreen-sm-down">
-            <form class="modal-content" method="POST" action="{{ route('mahasiswa.update', $row) }}">
-                @csrf @method('PUT')
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Mahasiswa</h5>
-                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-3">
-                        @foreach($fields as $name => $label)
-                            <div class="col-md-6">
-                                <label class="form-label">{{ $label }}</label>
-                                <input class="form-control" name="{{ $name }}" value="{{ old($name, $row->{$name}) }}" {{ in_array($name, ['nim','nama_mhs']) ? 'required' : '' }}>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button>
-                    <button class="btn-spk-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-@endforeach
-
-<div class="modal fade modal-spk" id="modalCreate" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-fullscreen-sm-down"><form class="modal-content" method="POST" action="{{ route('mahasiswa.store') }}">
-        @csrf
-        <div class="modal-header"><h5 class="modal-title">Tambah Mahasiswa</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
-        <div class="modal-body"><div class="row g-3">
-            @foreach($fields as $name => $label)
-                <div class="col-md-6"><label class="form-label">{{ $label }}</label><input class="form-control" name="{{ $name }}" value="{{ old($name) }}" {{ in_array($name, ['nim','nama_mhs']) ? 'required' : '' }}></div>
-            @endforeach
-        </div></div>
-        <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Simpan</button></div>
-    </form></div>
-</div>
-
-<div class="modal fade modal-spk" id="modalImport" tabindex="-1">
-    <div class="modal-dialog"><form class="modal-content" method="POST" action="{{ route('mahasiswa.import') }}" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-header"><h5 class="modal-title">Import Data Mahasiswa</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
-        <div class="modal-body">
-            <label class="form-label">File Excel/CSV</label>
-            <input type="file" name="file" class="form-control" accept=".xlsx,.xls,.csv,.txt" required>
-            <div class="text-muted small mt-2">Format kolom mengikuti template: nim, nama_mhs, prodi, jurusan, kip, dtk, desil, dan data orang tua.</div>
-        </div>
-        <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Import</button></div>
-    </form></div>
-</div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const rowCheckboxes = document.querySelectorAll('.row-select');
+        const deleteSelectedBtn = document.getElementById('btnDeleteSelected');
+        const bulkDeleteForm = document.getElementById('bulkDeleteForm');
+        const bulkDeleteNimsInput = document.getElementById('bulkDeleteNims');
+
+        // Select all/deselect all
+        selectAllCheckbox.addEventListener('change', function (e) {
+            rowCheckboxes.forEach(cb => {
+                cb.checked = e.target.checked;
+            });
+        });
+
+        // If any row checkbox is unchecked, uncheck select all
+        rowCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function () {
+                if (this.checked) {
+                    // check if all are checked
+                    selectAllCheckbox.checked = [...rowCheckboxes].every(cbx => cbx.checked);
+                } else {
+                    selectAllCheckbox.checked = false;
+                }
+            });
+        });
+
+        // Handle bulk delete
+        deleteSelectedBtn.addEventListener('click', function () {
+            const selectedNims = [];
+            rowCheckboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedNims.push(cb.value);
+                }
+            });
+
+            if (selectedNims.length === 0) {
+                alert('Pilih minimal satu data untuk dihapus.');
+                return;
+            }
+
+            if (confirm('Apakah Anda yakin ingin menghapus ' + selectedNims.length + ' data yang dipilih?')) {
+                bulkDeleteNimsInput.value = JSON.stringify(selectedNims);
+                bulkDeleteForm.submit();
+            }
+        });
+    });
+</script>
+@endpush
