@@ -18,11 +18,11 @@
     <div class="card-header-spk">Tabel Hasil PROMETHEE</div>
     <div class="table-responsive">
         <table class="table-spk">
-            <thead><tr><th>Peringkat</th><th>NIM</th><th>Nama Mahasiswa</th><th>Leaving Flow</th><th>Entering Flow</th><th>Net Flow</th><th>Status</th></tr></thead>
+            <thead><tr><th class="text-center">Peringkat</th><th>NIM</th><th>Nama Mahasiswa</th><th>Leaving Flow</th><th>Entering Flow</th><th>Net Flow</th><th>Status</th></tr></thead>
 <tbody>
     @forelse($hasil as $row)
         <tr>
-            <td>
+            <td class="text-center">
                 {!! 
                     $row->ranking == 1 ? '<span class="rank-badge-1">1</span>' : 
                     ($row->ranking == 2 ? '<span class="rank-badge-2">2</span>' : 
