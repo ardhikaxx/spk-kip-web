@@ -14,12 +14,23 @@
         <div class="card-spk">
             <div class="card-header-spk">
                 <span>Bobot Kriteria</span>
-                <form method="GET"><select class="form-select" name="tahun" onchange="this.form.submit()">@forelse($years as $year)<option value="{{ $year }}" @selected($tahun == $year)>{{ $year }}</option>@empty<option value="{{ $tahun }}">{{ $tahun }}</option>@endforelse</select></form>
+                <div class="ms-auto">
+                    <form method="GET" class="d-flex align-items-center gap-2">
+                        <label class="form-label mb-0 small text-muted">Tahun:</label>
+                        <select class="form-select form-select-sm" name="tahun" onchange="this.form.submit()" style="width: auto; min-width: 100px;">
+                            @forelse($years as $year)
+                                <option value="{{ $year }}" @selected($tahun == $year)>{{ $year }}</option>
+                            @empty
+                                <option value="{{ $tahun }}">{{ $tahun }}</option>
+                            @endforelse
+                        </select>
+                    </form>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table-spk">
                     <thead><tr><th>Kode</th><th>Nama Kriteria</th><th>Bobot</th></tr></thead>
-                    <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ number_format((float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot), 4) }}</td></tr>@endforeach</tbody>
+                    <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ (float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot) }}</td></tr>@endforeach</tbody>
                 </table>
             </div>
         </div>

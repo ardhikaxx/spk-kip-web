@@ -34,9 +34,10 @@ class PrometheeService
             $weightVector[$code] = $weight;
         }
 
-        $totalWeight = round(array_sum($weightVector), 4);
-        if (abs($totalWeight - 1.0) > 0.0001) {
-            throw new RuntimeException("Total bobot harus 1.0000. Total saat ini {$totalWeight}.");
+        $totalWeight = array_sum($weightVector);
+        if (abs($totalWeight - 1.0) > 0.000001) {
+            $formattedTotal = round($totalWeight, 6);
+            throw new RuntimeException("Total bobot harus 1.000000. Total saat ini {$formattedTotal}.");
         }
 
         $rows = $alternatives->values();

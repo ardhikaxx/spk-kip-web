@@ -17,10 +17,11 @@ class BobotController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate(['bobot' => ['required', 'array'], 'bobot.*' => ['required', 'numeric', 'min:0', 'max:1']]);
-        $total = round(array_sum($data['bobot']), 4);
+        $total = array_sum($data['bobot']);
 
-        if (abs($total - 1.0) > 0.0001) {
-            return back()->withErrors(['bobot' => "Total bobot harus 1.0000. Total saat ini {$total}."])->withInput();
+        if (abs($total - 1.0) > 0.000001) {
+            $currentTotal = round($total, 6);
+            return back()->withErrors(['bobot' => "Total bobot harus 1.000000. Total saat ini {$currentTotal}."])->withInput();
         }
 
         foreach ($data['bobot'] as $idKriteria => $nilai) {

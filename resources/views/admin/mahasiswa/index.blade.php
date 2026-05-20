@@ -115,15 +115,37 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">NIM</label>
+                            <input type="text" name="nim" class="form-control" placeholder="Masukkan NIM" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Mahasiswa</label>
+                            <input type="text" name="nama_mhs" class="form-control" placeholder="Masukkan Nama" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Jurusan</label>
+                            <select name="jurusan" class="form-select jurusan-select" required>
+                                <option value="">-- Pilih Jurusan --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Program Studi</label>
+                            <select name="prodi" class="form-select prodi-select" required>
+                                <option value="">-- Pilih Program Studi --</option>
+                            </select>
+                        </div>
                         @foreach($fields as $name => $label)
+                            @if(!in_array($name, ['nim', 'nama_mhs', 'prodi', 'jurusan']))
                             <div class="col-md-6">
                                 <label class="form-label">{{ $label }}</label>
                                 @if($name === 'desil')
                                     <input type="number" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}">
                                 @else
-                                    <input type="text" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}" {{ in_array($name, ['nim', 'nama_mhs']) ? 'required' : '' }}>
+                                    <input type="text" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}">
                                 @endif
                             </div>
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -175,15 +197,37 @@
                     @method('PUT')
                     <div class="modal-body">
                         <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">NIM</label>
+                                <input type="text" name="nim" class="form-control" value="{{ $row->nim }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Nama Mahasiswa</label>
+                                <input type="text" name="nama_mhs" class="form-control" value="{{ $row->nama_mhs }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Jurusan</label>
+                                <select name="jurusan" class="form-select jurusan-select" data-selected="{{ $row->jurusan }}" required>
+                                    <option value="">-- Pilih Jurusan --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Program Studi</label>
+                                <select name="prodi" class="form-select prodi-select" data-selected="{{ $row->prodi }}" required>
+                                    <option value="">-- Pilih Program Studi --</option>
+                                </select>
+                            </div>
                             @foreach($fields as $name => $label)
+                                @if(!in_array($name, ['nim', 'nama_mhs', 'prodi', 'jurusan']))
                                 <div class="col-md-6">
                                     <label class="form-label">{{ $label }}</label>
                                     @if($name === 'desil')
                                         <input type="number" name="{{ $name }}" class="form-control" value="{{ $row->$name }}">
                                     @else
-                                        <input type="text" name="{{ $name }}" class="form-control" value="{{ $row->$name }}" {{ in_array($name, ['nim', 'nama_mhs']) ? 'required' : '' }}>
+                                        <input type="text" name="{{ $name }}" class="form-control" value="{{ $row->$name }}">
                                     @endif
                                 </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -199,7 +243,71 @@
 
 @push('scripts')
 <script>
+    const prodiData = {
+        "Jurusan Produksi Pertanian": ["D3 Produksi Tanaman Hortikultura", "D3 Produksi Tanaman Perkebunan", "D4 Budidaya Tanaman Perkebunan", "D4 Teknik Produksi Benih", "D4 Teknologi Produksi Tanaman Pangan", "D4 Pengelolaan Perkebunan Kopi"],
+        "Jurusan Teknologi Pertanian": ["D3 Teknologi Industri Pangan", "D3 Keteknikan Pertanian", "D4 Teknologi Rekayasa Pangan"],
+        "Jurusan Peternakan": ["D3 Produksi Ternak", "D4 Manajemen Bisnis Unggas", "D4 Teknologi Pakan Ternak"],
+        "Jurusan Manajemen Agribisnis": ["D3 Manajemen Agribisnis", "D4 Manajemen Agroindustri"],
+        "Jurusan Teknologi Informasi": ["D3 Manajemen Informatika", "D3 Teknik Komputer", "D4 Teknik Informatika", "D4 Teknologi Rekayasa Komputer"],
+        "Jurusan Bahasa, Komunikasi, dan Pariwisata": ["D3 Bahasa Inggris", "D4 Destinasi Pariwisata"],
+        "Jurusan Kesehatan": ["D4 Manajemen Informasi Kesehatan", "D4 Gizi Klinik", "D4 Promosi Kesehatan"],
+        "Jurusan Teknik": ["D4 Teknik Energi Terbarukan", "D4 Mesin Otomotif", "D4 Teknologi Rekayasa Mekatronika"],
+        "Jurusan Bisnis": ["D4 Akuntansi Sektor Publik", "D4 Manajemen Pemasaran Internasional"],
+        "Kelas Internasional": ["Manajemen Informatika (INT)", "Teknik Informatika (INT)", "Manajemen Agroindustri (INT)"],
+        "PSDKU Bondowoso (Kampus 2)": ["D4 Manajemen Agribisnis", "D4 Produksi Media", "D4 Bisnis Digital"],
+        "PSDKU Nganjuk (Kampus 3)": ["D3 Manajemen Agribisnis", "D4 Teknik Informatika"],
+        "PSDKU Sidoarjo (Kampus 4)": ["D4 Manajemen Agroindustri", "D4 Teknik Informatika"],
+        "PSDKU Ngawi (Kampus 5)": ["D4 Manajemen Agribisnis", "D4 Manajemen Informasi Kesehatan"],
+        "PSDKU Sabu Raijua (Kampus 6)": ["D4 Teknologi Rekayasa Perangkat Lunak"]
+    };
+
+    function initProdiDropdowns(container) {
+        const jurusanSelect = container.querySelector('.jurusan-select');
+        const prodiSelect = container.querySelector('.prodi-select');
+
+        if (!jurusanSelect || !prodiSelect) return;
+
+        // Populate Jurusan
+        jurusanSelect.innerHTML = '<option value="">-- Pilih Jurusan --</option>';
+        Object.keys(prodiData).forEach(jurusan => {
+            const option = document.createElement('option');
+            option.value = jurusan;
+            option.textContent = jurusan;
+            jurusanSelect.appendChild(option);
+        });
+
+        jurusanSelect.addEventListener('change', function() {
+            const selectedJurusan = this.value;
+            prodiSelect.innerHTML = '<option value="">-- Pilih Program Studi --</option>';
+            
+            if (selectedJurusan && prodiData[selectedJurusan]) {
+                prodiData[selectedJurusan].forEach(prodi => {
+                    const option = document.createElement('option');
+                    option.value = prodi;
+                    option.textContent = prodi;
+                    prodiSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Handle initial values for edit
+        const initialJurusan = jurusanSelect.getAttribute('data-selected');
+        const initialProdi = prodiSelect.getAttribute('data-selected');
+
+        if (initialJurusan) {
+            jurusanSelect.value = initialJurusan;
+            jurusanSelect.dispatchEvent(new Event('change'));
+            if (initialProdi) {
+                prodiSelect.value = initialProdi;
+            }
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Initialize all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            initProdiDropdowns(modal);
+        });
         const selectAllCheckbox = document.getElementById('selectAll');
         const rowCheckboxes = document.querySelectorAll('.row-select');
         const deleteSelectedBtn = document.getElementById('btnDeleteSelected');
