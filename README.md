@@ -9,37 +9,35 @@
 ---
 
 ## 📌 Tentang Proyek
-**SPK KIP-K** adalah platform berbasis web yang dirancang untuk membantu proses seleksi penerima beasiswa KIP-Kuliah di **Politeknik Negeri Jember**. Sistem ini menggunakan metode **PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluation)** untuk memberikan hasil perankingan yang objektif, transparan, dan akurat berdasarkan berbagai kriteria yang telah ditentukan.
+**SPK KIP-K** adalah sistem pendukung keputusan berbasis web yang dirancang untuk membantu proses seleksi penerima beasiswa KIP-Kuliah di **Politeknik Negeri Jember**. Sistem ini menerapkan metode **PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluation)** guna memastikan proses perankingan dilakukan secara objektif, transparan, dan akurat berdasarkan berbagai parameter kriteria yang ditentukan.
+
+## 👥 Peran Pengguna
+1. **Administrator:** Memiliki akses penuh ke manajemen pengguna (Admin/Kaprodi), import data mahasiswa, pengaturan kriteria & bobot, serta pemantauan dashboard secara menyeluruh.
+2. **Kaprodi:** Memiliki akses untuk memantau mahasiswa di bawah program studinya, melakukan seleksi, serta mencetak atau mengunduh surat rekomendasi beasiswa.
 
 ## ✨ Fitur Utama
-Sistem ini dilengkapi dengan berbagai fitur unggulan untuk memudahkan Admin dan Kaprodi:
+- **Multi-Role Authentication:** Sistem manajemen peran yang ketat antara Admin dan Kaprodi.
+- **Dynamic Dashboard:** Visualisasi data penerima, statistik per jurusan, dan perankingan, yang dapat difilter berdasarkan tahun.
+- **PROMETHEE Engine:** Perhitungan *leaving flow*, *entering flow*, dan *net flow* secara otomatis.
+- **Data Import:** Fitur *bulk import* mahasiswa via Excel dengan *loading indicator* yang informatif.
+- **Interactive UI:** Pengalaman pengguna yang modern menggunakan SweetAlert2 untuk notifikasi dan konfirmasi aksi sensitif.
 
-### 🛡️ Dashboard & Manajemen
-- **Modern Dashboard:** Visualisasi data ringkas bagi Admin dan Kaprodi.
-- **Manajemen Pengguna:** Admin dapat mengelola akun (tambah/edit/hapus) untuk Admin lain maupun Kaprodi.
-- **Data Mahasiswa:** Pengelolaan data calon penerima beasiswa (Import Excel didukung).
-
-### ⚙️ Engine SPK (PROMETHEE)
-- **Kriteria & Sub-Kriteria:** Pengaturan bobot dan kriteria yang fleksibel.
-- **Perhitungan Otomatis:** Proses kalkulasi metode PROMETHEE yang cepat dan transparan.
-- **Hasil Seleksi:** Laporan perankingan otomatis berdasarkan skor akhir tertinggi.
-
-### 💎 Antarmuka (UI/UX)
-- **Modern Login:** Desain login premium dengan gradasi warna indigo yang elegan.
-- **Pill-Shaped Sidebar:** Navigasi modern sesuai dengan standar UI masa kini.
-- **SweetAlert2 Integration:** Notifikasi interaktif untuk setiap aksi sistem.
-
-## 🚀 Teknologi yang Digunakan
-- **Framework:** Laravel 11
-- **Styling:** Bootstrap 5 & Custom CSS (Vanilla)
+## 🛠️ Stack Teknologi
+- **Framework:** Laravel 11 (PHP 8.2+)
+- **Styling:** Bootstrap 5 & Vanilla CSS (Modern Design)
 - **Database:** MySQL
-- **Library Tambahan:**
-  - SweetAlert2 (Notifikasi & Konfirmasi)
-  - Bootstrap Icons
-  - Chart.js (Visualisasi Dashboard)
-  - Maatwebsite Excel (Import Data)
+- **Library Utama:** 
+    - [Maatwebsite Excel](https://laravel-excel.com/) (Import Data)
+    - [Chart.js](https://www.chartjs.org/) (Dashboard Visualization)
+    - [SweetAlert2](https://sweetalert2.github.io/) (Interaktif Notifikasi)
 
-## 🛠️ Instalasi Lokal
+## 🔑 Akun & Credential
+Sistem menggunakan autentikasi berbasis email internal `@polije.ac.id`. 
+*   **Admin:** `admin@polije.ac.id`
+*   **Kaprodi:** Daftar akun prodi otomatis dibuat saat `php artisan migrate:fresh --seed` dijalankan (contoh: `d3manajemeninformatika@polije.ac.id`).
+*   **Password:** Seluruh akun menggunakan password default: `password`.
+
+## 🚀 Instalasi
 
 1. **Clone Repository**
    ```bash
@@ -47,31 +45,29 @@ Sistem ini dilengkapi dengan berbagai fitur unggulan untuk memudahkan Admin dan 
    cd spk-kip-web
    ```
 
-2. **Install Dependensi**
+2. **Setup Environment**
+   ```bash
+   cp .env.example .env
+   # Atur database di file .env
+   ```
+
+3. **Install & Build**
    ```bash
    composer install
    npm install && npm run build
    ```
 
-3. **Konfigurasi Environment**
-   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi database Anda.
+4. **Database & Seeder**
    ```bash
-   cp .env.example .env
-   php artisan key:generate
+   php artisan migrate:fresh --seed
    ```
 
-4. **Migrasi & Seeder**
-   ```bash
-   php artisan migrate --seed
-   ```
-
-5. **Jalankan Server**
+5. **Jalankan Aplikasi**
    ```bash
    php artisan serve
    ```
+   Akses aplikasi di `http://127.0.0.1:8000`.
 
-## 🔑 Akun Default (Demo)
-| Role | Email | Password |
-| --- | --- | --- |
-| **Admin** | `admin@spkkip.test` | `password` |
+---
+*Dikembangkan oleh Tim IT SPK KIP-K Politeknik Negeri Jember.*
 
