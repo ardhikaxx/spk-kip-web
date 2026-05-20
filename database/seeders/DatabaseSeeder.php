@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
                 'nama_lengkap' => 'Kaprodi',
                 'nomor_telepon' => '080000000002',
                 'role' => 'kaprodi',
+                'prodi' => 'D4 Teknik Informatika',
+                'jurusan' => 'Jurusan Teknologi Informasi',
                 'password' => Hash::make('password'),
             ]
         );

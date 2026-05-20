@@ -86,7 +86,7 @@
                 <h5 class="modal-title">Import Data Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('mahasiswa.import') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('mahasiswa.import') }}" method="POST" enctype="multipart/form-data" id="importForm">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
@@ -97,7 +97,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn-spk-primary">Mulai Import</button>
+                    <button type="submit" class="btn-spk-primary" id="btnImportSubmit">Mulai Import</button>
                 </div>
             </form>
         </div>
@@ -304,6 +304,16 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('importForm').addEventListener('submit', function() {
+            Swal.fire({ 
+                title: 'Memproses...', 
+                html: 'Sistem sedang mengimpor data.<br>Mohon tunggu sebentar.', 
+                allowOutsideClick: false, 
+                showConfirmButton: false, 
+                didOpen: () => Swal.showLoading() 
+            });
+        });
+
         // Initialize all modals
         document.querySelectorAll('.modal').forEach(modal => {
             initProdiDropdowns(modal);

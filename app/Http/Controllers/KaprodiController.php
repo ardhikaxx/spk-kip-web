@@ -12,8 +12,15 @@ class KaprodiController extends Controller
         $search = $request->query('search');
         $user = auth()->user();
 
+        // Extract the core prodi name: remove "D3 ", "D4 ", "PSDKU", etc.
+        $coreProdi = preg_replace('/^(D3|D4)\s+/i', '', $user->prodi);
+        $coreProdi = preg_replace('/\s+PSDKU.*$/i', '', $coreProdi);
+
         $mahasiswa = Mahasiswa::query()
-            ->when($user->role === 'kaprodi', fn ($query) => $query->where('prodi', $user->prodi))
+            ->when($user->role === 'kaprodi', function ($query) use ($coreProdi) {
+                // Use LIKE to find students whose prodi matches the core name
+                $query->where('prodi', 'LIKE', "%{$coreProdi}%");
+            })
             ->when($search, fn ($query) => $query->where(function($q) use ($search) {
                 $q->where('nim', 'like', "%{$search}%")
                   ->orWhere('nama_mhs', 'like', "%{$search}%");
@@ -28,8 +35,13 @@ class KaprodiController extends Controller
     public function suratRekomendasi(string $nim)
     {
         $user = auth()->user();
+        $coreProdi = preg_replace('/^(D3|D4)\s+/i', '', $user->prodi);
+        $coreProdi = preg_replace('/\s+PSDKU.*$/i', '', $coreProdi);
+
         $mahasiswa = Mahasiswa::where('nim', $nim)
-            ->when($user->role === 'kaprodi', fn ($query) => $query->where('prodi', $user->prodi))
+            ->when($user->role === 'kaprodi', function ($query) use ($coreProdi) {
+                $query->where('prodi', 'LIKE', "%{$coreProdi}%");
+            })
             ->firstOrFail();
 
         return view('kaprodi.surat', compact('mahasiswa'));
@@ -38,8 +50,13 @@ class KaprodiController extends Controller
     public function downloadSurat(string $nim)
     {
         $user = auth()->user();
+        $coreProdi = preg_replace('/^(D3|D4)\s+/i', '', $user->prodi);
+        $coreProdi = preg_replace('/\s+PSDKU.*$/i', '', $coreProdi);
+
         $mahasiswa = Mahasiswa::where('nim', $nim)
-            ->when($user->role === 'kaprodi', fn ($query) => $query->where('prodi', $user->prodi))
+            ->when($user->role === 'kaprodi', function ($query) use ($coreProdi) {
+                $query->where('prodi', 'LIKE', "%{$coreProdi}%");
+            })
             ->firstOrFail();
 
         $html = view('kaprodi.surat-pdf', compact('mahasiswa'))->render();

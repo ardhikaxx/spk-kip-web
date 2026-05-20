@@ -14,10 +14,10 @@
                 @forelse($mahasiswa as $index => $row)
                     <tr>
                         <td>{{ $mahasiswa->firstItem() + $index }}</td>
-                        <td>{{ $row->nim }}</td>
-                        <td>{{ $row->nama_mhs }}</td>
-                        <td>{{ $row->prodi }}</td>
-                        <td>{{ $row->jurusan }}</td>
+                        <td>{{ $row->nim ?? '-' }}</td>
+                        <td>{{ $row->nama_mhs ?? '-' }}</td>
+                        <td>{{ $row->prodi ?? '-' }}</td>
+                        <td>{{ $row->jurusan ?? '-' }}</td>
                         <td><button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalSurat{{ $row->nim }}">Pilih</button></td>
                     </tr>
                     <div class="modal fade modal-spk" id="modalSurat{{ $row->nim }}" tabindex="-1">
