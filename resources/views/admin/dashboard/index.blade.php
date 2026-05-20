@@ -3,6 +3,21 @@
 @section('title', 'Dashboard')
 
 @section('content')
+<div class="d-flex justify-content-end mb-4">
+    @if(count($years) > 0)
+    <form method="GET" class="d-flex align-items-center gap-2">
+        <label class="form-label mb-0 small text-muted">Tahun:</label>
+        <select class="form-select form-select-sm" name="tahun" onchange="this.form.submit()" style="width: auto; min-width: 100px;">
+            @foreach($years as $year)
+                <option value="{{ $year }}" @selected($tahun == $year)>{{ $year }}</option>
+            @endforeach
+        </select>
+    </form>
+    @else
+        <span class="text-muted small italic">Data tidak tersedia</span>
+    @endif
+</div>
+
 <div class="row g-3 mb-4">
     <div class="col-md-4">
         <div class="stats-card">
@@ -38,7 +53,11 @@
         <div class="card-spk h-100">
             <div class="card-header-spk">Distribusi Penerima</div>
             <div class="card-body-spk d-flex align-items-center justify-content-center" style="min-height: 300px;">
-                <canvas id="distributionChart"></canvas>
+                @if($distributionValues)
+                    <canvas id="distributionChart"></canvas>
+                @else
+                    <p class="text-muted text-center">Data tidak tersedia</p>
+                @endif
             </div>
         </div>
     </div>
@@ -46,7 +65,11 @@
         <div class="card-spk h-100">
             <div class="card-header-spk">Jumlah Mahasiswa per Jurusan</div>
             <div class="card-body-spk">
-                <canvas id="jurusanChart" height="150"></canvas>
+                @if(count($jurusanLabels) > 0)
+                    <canvas id="jurusanChart" height="150"></canvas>
+                @else
+                    <p class="text-muted text-center py-5">Data tidak tersedia</p>
+                @endif
             </div>
         </div>
     </div>
@@ -55,14 +78,18 @@
 <div class="card-spk">
     <div class="card-header-spk">Visualisasi 10 Besar Hasil Perankingan (Net Flow)</div>
     <div class="card-body-spk">
-        <canvas id="rankingChart" height="100"></canvas>
+        @if(count($chartLabels) > 0)
+            <canvas id="rankingChart" height="100"></canvas>
+        @else
+            <p class="text-muted text-center py-5">Data tidak tersedia</p>
+        @endif
     </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-    // Ranking Chart
+    @if(count($chartLabels) > 0)
     new Chart(document.getElementById('rankingChart'), {
         type: 'bar',
         data: {
@@ -87,8 +114,9 @@
             }
         }
     });
+    @endif
 
-    // Distribution Chart
+    @if($distributionValues)
     new Chart(document.getElementById('distributionChart'), {
         type: 'doughnut',
         data: {
@@ -108,8 +136,9 @@
             cutout: '70%'
         }
     });
+    @endif
 
-    // Jurusan Chart
+    @if(count($jurusanLabels) > 0)
     new Chart(document.getElementById('jurusanChart'), {
         type: 'bar',
         data: {
@@ -135,5 +164,6 @@
             }
         }
     });
+    @endif
 </script>
 @endpush
