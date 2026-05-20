@@ -8,6 +8,37 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // User & Auth Tables
+        Schema::create('tb_user', function (Blueprint $table) {
+            $table->id('id_user');
+            $table->string('nama_lengkap');
+            $table->string('email')->unique();
+            $table->string('nomor_telepon')->nullable();
+            $table->enum('role', ['admin', 'kaprodi'])->default('kaprodi');
+            $table->string('prodi')->nullable();
+            $table->string('jurusan')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+
+        // SPK KIP Tables
         Schema::create('tb_mahasiswa', function (Blueprint $table) {
             $table->string('nim')->primary();
             $table->string('nama_mhs');
@@ -85,5 +116,8 @@ return new class extends Migration
         Schema::dropIfExists('tb_sub_kriteria');
         Schema::dropIfExists('tb_kriteria');
         Schema::dropIfExists('tb_mahasiswa');
+        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('tb_user');
     }
 };
