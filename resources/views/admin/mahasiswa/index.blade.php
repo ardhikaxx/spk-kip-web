@@ -78,6 +78,125 @@
 
 @endsection
 
+<!-- Modals -->
+<div class="modal fade modal-spk" id="modalImport" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Import Data Mahasiswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('mahasiswa.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">File Excel/CSV</label>
+                        <input type="file" name="file" class="form-control" accept=".xlsx, .xls, .csv" required>
+                        <small class="text-muted">Gunakan template yang tersedia untuk memastikan format data sesuai.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-spk-primary">Mulai Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-spk" id="modalCreate" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Data Mahasiswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('mahasiswa.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        @foreach($fields as $name => $label)
+                            <div class="col-md-6">
+                                <label class="form-label">{{ $label }}</label>
+                                @if($name === 'desil')
+                                    <input type="number" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}">
+                                @else
+                                    <input type="text" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}" {{ in_array($name, ['nim', 'nama_mhs']) ? 'required' : '' }}>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-spk-primary">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@foreach($mahasiswa as $row)
+    <!-- Detail Modal -->
+    <div class="modal fade modal-spk" id="modalDetail{{ $row->nim }}" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail Mahasiswa: {{ $row->nama_mhs }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3">
+                        @foreach($fields as $name => $label)
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">{{ $label }}</label>
+                                <div class="p-2 bg-light rounded border">{{ $row->$name ?? '-' }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade modal-spk" id="modalEdit{{ $row->nim }}" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Data Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('mahasiswa.update', $row) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            @foreach($fields as $name => $label)
+                                <div class="col-md-6">
+                                    <label class="form-label">{{ $label }}</label>
+                                    @if($name === 'desil')
+                                        <input type="number" name="{{ $name }}" class="form-control" value="{{ $row->$name }}">
+                                    @else
+                                        <input type="text" name="{{ $name }}" class="form-control" value="{{ $row->$name }}" {{ in_array($name, ['nim', 'nama_mhs']) ? 'required' : '' }}>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn-spk-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
