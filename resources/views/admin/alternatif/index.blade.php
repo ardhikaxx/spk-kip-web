@@ -55,6 +55,100 @@
 
 @endsection
 
+<!-- Modals -->
+<div class="modal fade modal-spk" id="modalBulk" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Semua Mahasiswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('alternatif.bulk') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p>Fitur ini akan menambahkan <strong>seluruh data mahasiswa</strong> yang ada ke dalam daftar alternatif untuk tahun terpilih.</p>
+                    <div class="mb-3">
+                        <label class="form-label">Tahun Angkatan/Seleksi</label>
+                        <input type="number" name="tahun" class="form-control" value="{{ date('Y') }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-spk-primary">Tambah Semua</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-spk" id="modalCreate" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Alternatif Baru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('alternatif.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label class="form-label">Pilih Mahasiswa</label>
+                            <select name="nim" id="select-mahasiswa" class="form-select" required>
+                                <option value="">-- Cari Nama atau NIM --</option>
+                                @foreach($mahasiswa as $m)
+                                    <option value="{{ $m->nim }}">{{ $m->nim }} - {{ $m->nama_mhs }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Tahun</label>
+                            <input type="number" name="tahun" class="form-control" value="{{ date('Y') }}" required>
+                        </div>
+                    </div>
+
+                    <div id="detail-kriteria" class="mt-4 d-none">
+                        <h6 class="fw-bold mb-3 border-bottom pb-2">Preview Skor Kriteria</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C1 - KIP</label>
+                                <input type="text" id="input-c1" class="form-control bg-light" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C2 - DTKS</label>
+                                <input type="text" id="input-c2" class="form-control bg-light" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C3 - Desil</label>
+                                <input type="text" id="input-c3" class="form-control bg-light" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C4 - Penghasilan</label>
+                                <input type="text" id="input-c4" class="form-control bg-light" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C5 - Status Ortu</label>
+                                <input type="text" id="input-c5" class="form-control bg-light" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small text-muted mb-1">C6 - Prestasi</label>
+                                <input type="text" id="input-c6" class="form-control bg-light" readonly>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3 py-2 small">
+                            <i class="bi bi-info-circle-fill me-1"></i> Skor di atas dihitung secara otomatis berdasarkan data mahasiswa.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-spk-primary">Simpan Alternatif</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
