@@ -36,7 +36,15 @@
                         @foreach(range(1, 6) as $i)
                             <td><span class="fw-bold">{{ $row->{"c{$i}"} }}</span><div class="text-muted small">{{ $row->{"label_c{$i}"} }}</div></td>
                         @endforeach
-                        <td><form method="POST" action="{{ route('alternatif.destroy', $row) }}" data-confirm-delete>@csrf @method('DELETE')<button class="btn-spk-danger"><i class="bi bi-trash"></i></button></form></td>
+                        <td>
+                            <form method="POST" action="{{ route('alternatif.destroy', $row) }}" data-confirm-delete>
+                                @csrf 
+                                @method('DELETE')
+                                <button type="submit" class="btn-spk-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr><td colspan="{{ 5 + $kriteria->count() }}" class="text-center text-muted">Belum ada alternatif.</td></tr>
@@ -187,14 +195,23 @@
             });
 
             if (selectedIds.length === 0) {
-                alert('Pilih minimal satu data untuk dihapus.');
+                SwalSpk.fire({ icon: 'info', title: 'Pilih Data', text: 'Pilih minimal satu data untuk dihapus.' });
                 return;
             }
 
-            if (confirm('Apakah Anda yakin ingin menghapus ' + selectedIds.length + ' data yang dipilih?')) {
-                bulkDeleteIdsInput.value = JSON.stringify(selectedIds);
-                bulkDeleteForm.submit();
-            }
+            SwalSpk.fire({
+                title: 'Hapus ' + selectedIds.length + ' Alternatif?',
+                text: 'Data yang dipilih akan dihapus secara permanen.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus Semua',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    bulkDeleteIdsInput.value = JSON.stringify(selectedIds);
+                    bulkDeleteForm.submit();
+                }
+            });
         });
     });
 </script>

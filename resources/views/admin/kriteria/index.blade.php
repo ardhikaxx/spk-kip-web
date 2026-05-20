@@ -24,7 +24,7 @@
                                 <button class="btn-dots" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $row->id_kriteria }}"><i class="bi bi-pencil"></i> Edit</button>
-                                    <form method="POST" action="{{ route('kriteria.destroy', $row) }}" data-confirm-delete>@csrf @method('DELETE')<button class="dropdown-item text-danger"><i class="bi bi-trash"></i> Hapus</button></form>
+                                    <form method="POST" action="{{ route('kriteria.destroy', $row) }}" data-confirm-delete>@csrf @method('DELETE')<button type="submit" class="dropdown-item text-danger"><i class="bi bi-trash"></i> Hapus</button></form>
                                 </div>
                             </div>
                         </td>

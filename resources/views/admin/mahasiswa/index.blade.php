@@ -235,14 +235,23 @@
             });
 
             if (selectedNims.length === 0) {
-                alert('Pilih minimal satu data untuk dihapus.');
+                SwalSpk.fire({ icon: 'info', title: 'Pilih Data', text: 'Pilih minimal satu data untuk dihapus.' });
                 return;
             }
 
-            if (confirm('Apakah Anda yakin ingin menghapus ' + selectedNims.length + ' data yang dipilih?')) {
-                bulkDeleteNimsInput.value = JSON.stringify(selectedNims);
-                bulkDeleteForm.submit();
-            }
+            SwalSpk.fire({
+                title: 'Hapus ' + selectedNims.length + ' Data?',
+                text: 'Data yang dipilih akan dihapus secara permanen.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus Semua',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    bulkDeleteNimsInput.value = JSON.stringify(selectedNims);
+                    bulkDeleteForm.submit();
+                }
+            });
         });
     });
 </script>
