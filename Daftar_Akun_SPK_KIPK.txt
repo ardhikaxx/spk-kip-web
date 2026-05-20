@@ -1,0 +1,57 @@
+DAFTAR AKUN SISTEM SPK KIP-K
+==========================
+Default Password untuk semua akun: password
+
+1. ADMINISTRATOR
+----------------
+Nama Lengkap : Administrator SPK KIP-K
+Email        : admin@polije.ac.id
+
+2. KAPRODI (Kepala Program Studi)
+---------------------------------
+
+JURUSAN PRODUKSI PERTANIAN
+- D3 Produksi Tanaman Hortikultura        : d3produksitanamanhortikultura@polije.ac.id
+- D3 Produksi Tanaman Perkebunan          : d3produksitanamanperkebunan@polije.ac.id
+- D4 Budidaya Tanaman Perkebunan          : d4budidayatanamanperkebunan@polije.ac.id
+- D4 Teknik Produksi Benih                : d4teknikproduksibenih@polije.ac.id
+- D4 Teknologi Produksi Tanaman Pangan    : d4teknologiproduksitanamanpangan@polije.ac.id
+- D4 Pengelolaan Perkebunan Kopi          : d4pengelolaanperkebunankopi@polije.ac.id
+
+JURUSAN TEKNOLOGI PERTANIAN
+- D3 Teknologi Industri Pangan            : d3teknologiindustripangan@polije.ac.id
+- D3 Keteknikan Pertanian                 : d3keteknikanpertanian@polije.ac.id
+- D4 Teknologi Rekayasa Pangan            : d4teknologirekayasapangan@polije.ac.id
+
+JURUSAN PETERNAKAN
+- D3 Produksi Ternak                      : d3produksiternak@polije.ac.id
+- D4 Manajemen Bisnis Unggas              : d4manajemenbisnisunggas@polije.ac.id
+- D4 Teknologi Pakan Ternak               : d4teknologipakaternak@polije.ac.id
+
+JURUSAN MANAJEMEN AGRIBISNIS
+- D3 Manajemen Agribisnis                 : d3manajemenagribisnis@polije.ac.id
+- D4 Manajemen Agroindustri               : d4manajemenagroindustri@polije.ac.id
+
+JURUSAN TEKNOLOGI INFORMASI
+- D3 Manajemen Informatika                : d3manajemeninformatika@polije.ac.id
+- D3 Teknik Komputer                      : d3teknikkomputer@polije.ac.id
+- D4 Teknik Informatika                   : d4teknikinformatika@polije.ac.id
+- D4 Teknologi Rekayasa Komputer          : d4teknologirekayasakomputer@polije.ac.id
+
+JURUSAN BAHASA, KOMUNIKASI, DAN PARIWISATA
+- D3 Bahasa Inggris                       : d3bahasainggris@polije.ac.id
+- D4 Destinasi Pariwisata                 : d4destinasipariwisata@polije.ac.id
+
+JURUSAN KESEHATAN
+- D4 Manajemen Informasi Kesehatan        : d4manajemeninformasikesehatan@polije.ac.id
+- D4 Gizi Klinik                          : d4giziklinik@polije.ac.id
+- D4 Promosi Kesehatan                    : d4promosikesehatan@polije.ac.id
+
+JURUSAN TEKNIK
+- D4 Teknik Energi Terbarukan             : d4teknikenergiterbarukan@polije.ac.id
+- D4 Mesin Otomotif                       : d4mesinotomotif@polije.ac.id
+- D4 Teknologi Rekayasa Mekatronika       : d4teknologirekayasamekatronika@polije.ac.id
+
+JURUSAN BISNIS
+- D4 Akuntansi Sektor Publik              : d4akuntansisektorpublik@polije.ac.id
+- D4 Manajemen Pemasaran Internasional    : d4manajemenpemasaraninternasional@polije.ac.id

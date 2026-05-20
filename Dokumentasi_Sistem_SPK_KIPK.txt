@@ -1,0 +1,77 @@
+SPESIFIKASI TEKNIS DAN DOKUMENTASI SISTEM SPK KIP-K
+===================================================
+
+1. GAMBARAN UMUM
+   Sistem Pendukung Keputusan (SPK) KIP-Kuliah adalah aplikasi berbasis web yang diimplementasikan menggunakan Laravel 11. Fokus utama sistem ini adalah melakukan perankingan mahasiswa berdasarkan kriteria-kriteria ekonomi dan prestasi menggunakan metode PROMETHEE.
+
+2. ARSITEKTUR APLIKASI
+   Sistem mengikuti arsitektur Model-View-Controller (MVC) yang standar dalam Laravel:
+   - Model: Mengelola interaksi dengan database (Eloquent ORM).
+   - View: Blade template engine untuk merender antarmuka.
+   - Controller: Menangani logika HTTP, validasi, dan alur aplikasi.
+   - Services: Tempat logika bisnis kompleks (seperti kalkulasi PROMETHEE) dipisahkan agar controller tetap ramping.
+
+3. ALUR KERJA DETAIL PER ROL (USE CASE)
+   A. ADMINISTRATOR
+      1. Login: Menggunakan email internal @polije.ac.id.
+      2. Manajemen User: Admin membuat akun Kaprodi. Data prodi diikat ke user tersebut.
+      3. Import Data: Mengunggah file Excel. Laravel-Excel memetakan kolom file ke model `Mahasiswa`.
+      4. Kriteria: Menentukan bobot (W) setiap kriteria (C1-C6). Bobot ini bersifat global untuk metode PROMETHEE.
+      5. Alternatif: Memilih mahasiswa untuk mengikuti seleksi tahun tertentu.
+      6. Kalkulasi: Memicu `PrometheeService` yang akan memproses data menjadi hasil perankingan.
+      7. Dashboard: Melihat distribusi penerima, mahasiswa per jurusan, dan top 10 perankingan (Net Flow).
+
+   B. KAPRODI
+      1. Login: Sesuai dengan akun prodi masing-masing.
+      2. Dashboard: Data mahasiswa difilter otomatis berdasarkan `prodi` user yang login.
+      3. Rekomendasi: Kaprodi dapat meninjau detail mahasiswa (skor kriteria) dan men-generate surat rekomendasi dalam format PDF.
+
+4. LOGIKA PEMROGRAMAN & RUMUS MATEMATIKA (PROMETHEE)
+   PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluation) bekerja dengan mengevaluasi perbandingan berpasangan (pairwise comparison).
+
+   A. Definisi:
+      a: Alternatif (Mahasiswa)
+      f: Fungsi kriteria
+      d: Selisih (d = f(a) - f(b))
+      P: Fungsi Preferensi
+      W: Bobot
+
+   B. Algoritma (di dalam `PrometheeService.php`):
+      1. Penentuan Indeks Preferensi:
+         PI(a,b) = (Σ W_j * P_j(a,b)) / Σ W_j
+         Dalam kode, kita melakukan iterasi `foreach` alternatif (a) dan `foreach` alternatif (b).
+      2. Leaving Flow (Φ+):
+         Φ+(a) = (1 / n-1) * Σ PI(a,b)
+         (Jumlah dari seluruh PI(a,b) untuk semua b != a, dibagi jumlah alternatif dikurangi 1).
+      3. Entering Flow (Φ-):
+         Φ-(a) = (1 / n-1) * Σ PI(b,a)
+         (Jumlah dari seluruh PI(b,a) untuk semua b != a, dibagi jumlah alternatif dikurangi 1).
+      4. Net Flow (Φ):
+         Φ(a) = Φ+(a) - Φ-(a)
+
+5. PENJELASAN DATABASE SCHEMA (RELASI DATA)
+   - tb_user (id_user, role, prodi, jurusan) -> Relasi ke prodi untuk filter kaprodi.
+   - tb_mahasiswa (nim, nama, prodi, jurusan) -> Data utama.
+   - tb_kriteria (id_kriteria, kode, nama, jenis, nilai_bobot) -> Referensi kriteria.
+   - tb_sub_kriteria (id_subkriteria, id_kriteria, nilai) -> Detail skor per kriteria.
+   - tb_alternatif (id_alternatif, nim, tahun, c1-c6) -> Mahasiswa yang ikut seleksi di tahun X.
+   - tb_hasil_perhitungan (id_hasil, id_alternatif, leaving_flow, entering_flow, net_flow, ranking, status) -> Hasil final PROMETHEE.
+
+6. PANDUAN PENGEMBANGAN (MAINTENANCE)
+   - Menambah Kriteria:
+     Jika ingin menambah C7, Anda harus mengubah:
+     1. Migration `create_spk_kip_tables` (tambah kolom di tb_alternatif).
+     2. `PrometheeService.php` (tambah logika hitung kriteria ke-7).
+     3. `MahasiswaImport` (tambah mapping data jika data dari Excel).
+     4. `index.blade.php` (update tabel preview jika perlu).
+
+   - Troubleshooting Filter Dashboard:
+     Filter menggunakan `LIKE` dengan teknik pembersihan string (`preg_replace`) untuk menghapus prefix D3/D4 dan suffix PSDKU. Jika data tidak muncul, periksa kesamaan *string* di `tb_mahasiswa` dengan nama prodi di user.
+
+7. KEAMANAN & PENGELOLAAN
+   - Autentikasi: Menggunakan Laravel Auth dengan sistem Role (Admin/Kaprodi).
+   - Keamanan: Password menggunakan `Hash::make()` (Bcrypt).
+   - Keamanan URL: Middleware `CheckRole` membatasi akses ke route admin.
+
+---
+Dokumen ini adalah referensi definitif untuk alur sistem SPK KIP-K. Untuk bantuan lebih lanjut, hubungi pengembang utama atau merujuk ke source code `app/Services/PrometheeService.php` untuk detail kalkulasi.

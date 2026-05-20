@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@gmail.com'],
+            ['email' => 'admin@polije.ac.id'],
             [
                 'nama_lengkap' => 'Administrator SPK KIP-K',
                 'nomor_telepon' => '080000000001',
@@ -23,17 +23,37 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        User::updateOrCreate(
-            ['email' => 'kaprodi@gmail.com'],
-            [
-                'nama_lengkap' => 'Kaprodi',
-                'nomor_telepon' => '080000000002',
-                'role' => 'kaprodi',
-                'prodi' => 'D4 Teknik Informatika',
-                'jurusan' => 'Jurusan Teknologi Informasi',
-                'password' => Hash::make('password'),
-            ]
-        );
+        $prodiData = [
+            "Jurusan Produksi Pertanian" => [
+                "D3 Produksi Tanaman Hortikultura", "D3 Produksi Tanaman Perkebunan", "D4 Budidaya Tanaman Perkebunan", 
+                "D4 Teknik Produksi Benih", "D4 Teknologi Produksi Tanaman Pangan", "D4 Pengelolaan Perkebunan Kopi"
+            ],
+            "Jurusan Teknologi Pertanian" => ["D3 Teknologi Industri Pangan", "D3 Keteknikan Pertanian", "D4 Teknologi Rekayasa Pangan"],
+            "Jurusan Peternakan" => ["D3 Produksi Ternak", "D4 Manajemen Bisnis Unggas", "D4 Teknologi Pakan Ternak"],
+            "Jurusan Manajemen Agribisnis" => ["D3 Manajemen Agribisnis", "D4 Manajemen Agroindustri"],
+            "Jurusan Teknologi Informasi" => ["D3 Manajemen Informatika", "D3 Teknik Komputer", "D4 Teknik Informatika", "D4 Teknologi Rekayasa Komputer"],
+            "Jurusan Bahasa, Komunikasi, dan Pariwisata" => ["D3 Bahasa Inggris", "D4 Destinasi Pariwisata"],
+            "Jurusan Kesehatan" => ["D4 Manajemen Informasi Kesehatan", "D4 Gizi Klinik", "D4 Promosi Kesehatan"],
+            "Jurusan Teknik" => ["D4 Teknik Energi Terbarukan", "D4 Mesin Otomotif", "D4 Teknologi Rekayasa Mekatronika"],
+            "Jurusan Bisnis" => ["D4 Akuntansi Sektor Publik", "D4 Manajemen Pemasaran Internasional"]
+        ];
+
+        foreach ($prodiData as $jurusan => $prodis) {
+            foreach ($prodis as $prodi) {
+                $email = strtolower(str_replace(' ', '', $prodi)) . '@polije.ac.id';
+                User::updateOrCreate(
+                    ['email' => $email],
+                    [
+                        'nama_lengkap' => 'Kaprodi ' . $prodi,
+                        'nomor_telepon' => '081234567890',
+                        'role' => 'kaprodi',
+                        'jurusan' => $jurusan,
+                        'prodi' => $prodi,
+                        'password' => Hash::make('password'),
+                    ]
+                );
+            }
+        }
 
         $criteria = [
             'C1' => ['Kepemilikan KIP SMA', 0.04, ['Memiliki KIP' => 4, 'Tidak memiliki KIP, tetapi termasuk keluarga penerima bantuan sosial lain' => 3, 'Tidak memiliki KIP, tetapi memiliki SKTM dari pihak berwenang' => 2, 'Tidak memiliki semuanya' => 1]],
