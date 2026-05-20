@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('nomor_telepon')->nullable();
             $table->enum('role', ['admin', 'kaprodi'])->default('kaprodi');
+            $table->string('prodi')->nullable();
+            $table->string('jurusan')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

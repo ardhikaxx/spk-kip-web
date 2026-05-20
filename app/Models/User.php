@@ -27,6 +27,8 @@ class User extends Authenticatable
         'email',
         'nomor_telepon',
         'role',
+        'prodi',
+        'jurusan',
         'password',
     ];
 

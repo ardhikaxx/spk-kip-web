@@ -23,6 +23,8 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:tb_user',
             'nomor_telepon' => 'nullable|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
+            'prodi' => 'nullable|string|max:255',
+            'jurusan' => 'nullable|string|max:255',
             'password' => 'required|string|min:8',
         ]);
 
@@ -31,6 +33,8 @@ class UserController extends Controller
             'email' => $request->email,
             'nomor_telepon' => $request->nomor_telepon,
             'role' => $request->role,
+            'prodi' => $request->prodi,
+            'jurusan' => $request->jurusan,
             'password' => Hash::make($request->password),
         ]);
 
@@ -46,6 +50,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('tb_user')->ignore($user->id_user, 'id_user')],
             'nomor_telepon' => 'nullable|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
+            'prodi' => 'nullable|string|max:255',
+            'jurusan' => 'nullable|string|max:255',
             'password' => 'nullable|string|min:8',
         ]);
 
@@ -53,6 +59,8 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->nomor_telepon = $request->nomor_telepon;
         $user->role = $request->role;
+        $user->prodi = $request->prodi;
+        $user->jurusan = $request->jurusan;
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
