@@ -13,12 +13,32 @@ class AdminDashboardController extends Controller
     {
         $hasil = HasilPerhitungan::with('alternatif.mahasiswa')->orderBy('ranking')->limit(10)->get();
 
+        // Data for Distribution Chart (Recipients vs Non-Recipients)
+        $penerimaCount = HasilPerhitungan::where('status', 'Penerima')->count();
+        $tidakPenerimaCount = HasilPerhitungan::where('status', 'Tidak Penerima')->count();
+
+        // Data for Jurusan Chart
+        $jurusanStats = \App\Models\Mahasiswa::select('jurusan', \DB::raw('count(*) as total'))
+            ->whereNotNull('jurusan')
+            ->groupBy('jurusan')
+            ->get();
+
         return view('admin.dashboard.index', [
             'totalPendaftar' => Alternatif::count(),
-            'totalPenerima' => HasilPerhitungan::where('status', 'Penerima')->count(),
+            'totalPenerima' => $penerimaCount,
             'totalKriteria' => Kriteria::count(),
+            
+            // Ranking Chart Data
             'chartLabels' => $hasil->map(fn ($row) => $row->alternatif?->mahasiswa?->nama_mhs)->values(),
             'chartValues' => $hasil->pluck('net_flow')->map(fn ($value) => (float) $value)->values(),
+
+            // Distribution Chart Data
+            'distributionLabels' => ['Penerima', 'Tidak Penerima'],
+            'distributionValues' => [$penerimaCount, $tidakPenerimaCount],
+
+            // Jurusan Chart Data
+            'jurusanLabels' => $jurusanStats->pluck('jurusan')->values(),
+            'jurusanValues' => $jurusanStats->pluck('total')->values(),
         ]);
     }
 }
