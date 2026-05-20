@@ -71,7 +71,7 @@
                 <h5 class="modal-title">Tambah Semua Mahasiswa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('alternatif.bulk') }}" method="POST">
+            <form action="{{ route('alternatif.bulk') }}" method="POST" id="bulkForm">
                 @csrf
                 <div class="modal-body">
                     <p>Fitur ini akan menambahkan <strong>seluruh data mahasiswa</strong> yang ada ke dalam daftar alternatif untuk tahun terpilih.</p>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-spk-outline" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn-spk-primary">Tambah Semua</button>
+                    <button type="submit" class="btn-spk-primary" id="btnBulkSubmit">Tambah Semua</button>
                 </div>
             </form>
         </div>
@@ -160,6 +160,16 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('bulkForm').addEventListener('submit', function() {
+            SwalSpk.fire({ 
+                title: 'Memproses...', 
+                html: 'Sistem sedang menambahkan data alternatif.<br>Mohon tunggu sebentar.', 
+                allowOutsideClick: false, 
+                showConfirmButton: false, 
+                didOpen: () => Swal.showLoading() 
+            });
+        });
+
         const selectAllCheckbox = document.getElementById('selectAll');
         const rowCheckboxes = document.querySelectorAll('.row-select');
         const deleteSelectedBtn = document.getElementById('btnDeleteSelected');
