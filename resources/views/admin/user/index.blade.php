@@ -28,11 +28,11 @@
                             <td class="fw-bold">{{ $user->nama_lengkap }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <span class="badge {{ $user->role === 'admin' ? 'badge-benefit' : 'badge-tersedia' }}">
+                                <div class="badge {{ $user->role === 'admin' ? 'badge-benefit' : 'badge-tersedia' }} mb-1">
                                     {{ ucfirst($user->role) }}
-                                </span>
+                                </div>
                                 @if($user->role === 'kaprodi' && $user->prodi)
-                                    <div class="small text-muted mt-1">{{ $user->prodi }}</div>
+                                    <div class="small fw-bold text-primary">{{ $user->prodi }}</div>
                                 @endif
                             </td>
                             <td>{{ $user->nomor_telepon ?? '-' }}</td>
