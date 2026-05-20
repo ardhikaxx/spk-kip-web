@@ -29,14 +29,6 @@
                             </div>
                         </td>
                     </tr>
-                    <div class="modal fade modal-spk" id="modalEdit{{ $row->id_kriteria }}" tabindex="-1">
-                        <div class="modal-dialog"><form class="modal-content" method="POST" action="{{ route('kriteria.update', $row) }}">
-                            @csrf @method('PUT')
-                            <div class="modal-header"><h5 class="modal-title">Edit Kriteria</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
-                            @include('admin.kriteria.form', ['row' => $row])
-                            <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Simpan</button></div>
-                        </form></div>
-                    </div>
                 @empty
                     <tr><td colspan="6" class="text-center text-muted">Belum ada kriteria.</td></tr>
                 @endforelse
@@ -54,4 +46,23 @@
         <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><button class="btn-spk-primary">Simpan</button></div>
     </form></div>
 </div>
+
+@foreach($kriteria as $row)
+    <div class="modal fade modal-spk" id="modalEdit{{ $row->id_kriteria }}" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content" method="POST" action="{{ route('kriteria.update', $row) }}">
+                @csrf @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Kriteria</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                @include('admin.kriteria.form', ['row' => $row])
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button>
+                    <button class="btn-spk-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endforeach
 @endsection
