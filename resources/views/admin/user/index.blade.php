@@ -28,12 +28,16 @@
                             <td class="fw-bold">{{ $user->nama_lengkap }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <div class="badge {{ $user->role === 'admin' ? 'badge-benefit' : 'badge-tersedia' }} mb-1">
-                                    {{ ucfirst($user->role) }}
+                                <div class="d-flex flex-column">
+                                    <span class="badge {{ $user->role === 'admin' ? 'bg-primary' : 'bg-info' }} text-white align-self-start mb-1 px-2 py-1">
+                                        {{ ucfirst($user->role) }}
+                                    </span>
+                                    @if($user->role === 'kaprodi' && $user->prodi)
+                                        <span class="text-muted small fw-medium" style="font-size: 0.85rem;">
+                                            <i class="bi bi-mortarboard-fill me-1"></i>{{ $user->prodi }}
+                                        </span>
+                                    @endif
                                 </div>
-                                @if($user->role === 'kaprodi' && $user->prodi)
-                                    <div class="small fw-bold text-primary">{{ $user->prodi }}</div>
-                                @endif
                             </td>
                             <td>{{ $user->nomor_telepon ?? '-' }}</td>
                             <td class="text-center">
