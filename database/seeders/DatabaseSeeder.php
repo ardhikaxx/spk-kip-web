@@ -46,9 +46,29 @@ class DatabaseSeeder extends Seeder
 
         foreach ($prodiData as $jurusan => $prodis) {
             foreach ($prodis as $prodi) {
-                $cleanJurusan = strtolower(preg_replace('/[^a-z0-9]/', '', $jurusan));
-                $cleanProdi = strtolower(preg_replace('/[^a-z0-9]/', '', $prodi));
-                $email = "kaprodi.{$cleanProdi}.{$cleanJurusan}@polije.ac.id";
+                // Shorten Campus Name
+                $campusShort = 'jbr'; // Default Jember (Main)
+                if (stripos($jurusan, 'Bondowoso') !== false) $campusShort = 'bws';
+                elseif (stripos($jurusan, 'Nganjuk') !== false) $campusShort = 'ngj';
+                elseif (stripos($jurusan, 'Sidoarjo') !== false) $campusShort = 'sda';
+                elseif (stripos($jurusan, 'Ngawi') !== false) $campusShort = 'ngw';
+                elseif (stripos($jurusan, 'Sabu Raijua') !== false) $campusShort = 'sbj';
+                elseif (stripos($jurusan, 'Internasional') !== false) $campusShort = 'int';
+
+                // Shorten Prodi Name (e.g., Teknik Informatika -> ti)
+                $words = explode(' ', preg_replace('/[^a-z0-9 ]/i', '', $prodi));
+                $prodiShort = '';
+                foreach ($words as $word) {
+                    if (strlen($word) > 2) $prodiShort .= strtolower($word[0]);
+                }
+                
+                // Fallback if prodiShort is too short or empty
+                if (strlen($prodiShort) < 2) {
+                    $prodiShort = strtolower(substr(preg_replace('/[^a-z0-9]/i', '', $prodi), 0, 5));
+                }
+
+                // Final Email: kaprodi.ti.jbr@polije.ac.id
+                $email = "kaprodi.{$prodiShort}.{$campusShort}@polije.ac.id";
                 
                 User::updateOrCreate(
                     ['email' => $email],
