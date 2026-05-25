@@ -36,9 +36,12 @@ class DatabaseSeeder extends Seeder
             "Jurusan Kesehatan" => ["D4 Manajemen Informasi Kesehatan", "D4 Gizi Klinik", "D4 Promosi Kesehatan"],
             "Jurusan Teknik" => ["D4 Teknik Energi Terbarukan", "D4 Mesin Otomotif", "D4 Teknologi Rekayasa Mekatronika"],
             "Jurusan Bisnis" => ["D4 Akuntansi Sektor Publik", "D4 Manajemen Pemasaran Internasional"],
+            "Kelas Internasional" => ["Manajemen Informatika (INT)", "Teknik Informatika (INT)", "Manajemen Agroindustri (INT)"],
+            "PSDKU Bondowoso (Kampus 2)" => ["D4 Manajemen Agribisnis", "D4 Produksi Media", "D4 Bisnis Digital"],
             "PSDKU Nganjuk (Kampus 3)" => ["D3 Manajemen Agribisnis", "D4 Teknik Informatika"],
             "PSDKU Sidoarjo (Kampus 4)" => ["D4 Manajemen Agroindustri", "D4 Teknik Informatika"],
-            "PSDKU Ngawi (Kampus 5)" => ["D4 Manajemen Agribisnis", "D4 Manajemen Informasi Kesehatan"]
+            "PSDKU Ngawi (Kampus 5)" => ["D4 Manajemen Agribisnis", "D4 Manajemen Informasi Kesehatan"],
+            "PSDKU Sabu Raijua (Kampus 6)" => ["D4 Teknologi Rekayasa Perangkat Lunak"]
         ];
 
         foreach ($prodiData as $jurusan => $prodis) {
