@@ -35,16 +35,22 @@ class DatabaseSeeder extends Seeder
             "Jurusan Bahasa, Komunikasi, dan Pariwisata" => ["D3 Bahasa Inggris", "D4 Destinasi Pariwisata"],
             "Jurusan Kesehatan" => ["D4 Manajemen Informasi Kesehatan", "D4 Gizi Klinik", "D4 Promosi Kesehatan"],
             "Jurusan Teknik" => ["D4 Teknik Energi Terbarukan", "D4 Mesin Otomotif", "D4 Teknologi Rekayasa Mekatronika"],
-            "Jurusan Bisnis" => ["D4 Akuntansi Sektor Publik", "D4 Manajemen Pemasaran Internasional"]
+            "Jurusan Bisnis" => ["D4 Akuntansi Sektor Publik", "D4 Manajemen Pemasaran Internasional"],
+            "PSDKU Nganjuk (Kampus 3)" => ["D3 Manajemen Agribisnis", "D4 Teknik Informatika"],
+            "PSDKU Sidoarjo (Kampus 4)" => ["D4 Manajemen Agroindustri", "D4 Teknik Informatika"],
+            "PSDKU Ngawi (Kampus 5)" => ["D4 Manajemen Agribisnis", "D4 Manajemen Informasi Kesehatan"]
         ];
 
         foreach ($prodiData as $jurusan => $prodis) {
             foreach ($prodis as $prodi) {
-                $email = strtolower(str_replace(' ', '', $prodi)) . '@polije.ac.id';
+                $cleanJurusan = strtolower(preg_replace('/[^a-z0-9]/', '', $jurusan));
+                $cleanProdi = strtolower(preg_replace('/[^a-z0-9]/', '', $prodi));
+                $email = "kaprodi.{$cleanProdi}.{$cleanJurusan}@polije.ac.id";
+                
                 User::updateOrCreate(
                     ['email' => $email],
                     [
-                        'nama_lengkap' => 'Kaprodi ' . $prodi,
+                        'nama_lengkap' => 'Kaprodi ' . $prodi . ' (' . $jurusan . ')',
                         'nomor_telepon' => '081234567890',
                         'role' => 'kaprodi',
                         'jurusan' => $jurusan,

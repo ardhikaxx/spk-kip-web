@@ -3,6 +3,11 @@
 @section('title', 'Dashboard Kaprodi')
 
 @section('content')
+<div class="mb-4">
+    <h2 class="h4 fw-bold text-dark">Data Mahasiswa {{ auth()->user()->prodi }}</h2>
+    <p class="text-muted">{{ auth()->user()->jurusan }}</p>
+</div>
+
 <div class="card-spk">
     <div class="card-header-spk">
         <form class="search-spk" method="GET"><i class="bi bi-search search-icon"></i><input name="search" value="{{ $search }}" placeholder="Cari NIM atau Nama..."></form>

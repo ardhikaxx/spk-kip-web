@@ -23,8 +23,8 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:tb_user',
             'nomor_telepon' => 'nullable|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
-            'prodi' => 'nullable|string|max:255',
-            'jurusan' => 'nullable|string|max:255',
+            'prodi' => 'required_if:role,kaprodi|nullable|string|max:255',
+            'jurusan' => 'required_if:role,kaprodi|nullable|string|max:255',
             'password' => 'required|string|min:8',
         ]);
 
@@ -50,8 +50,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('tb_user')->ignore($user->id_user, 'id_user')],
             'nomor_telepon' => 'nullable|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
-            'prodi' => 'nullable|string|max:255',
-            'jurusan' => 'nullable|string|max:255',
+            'prodi' => 'required_if:role,kaprodi|nullable|string|max:255',
+            'jurusan' => 'required_if:role,kaprodi|nullable|string|max:255',
             'password' => 'nullable|string|min:8',
         ]);
 
