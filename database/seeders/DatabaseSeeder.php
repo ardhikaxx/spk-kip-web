@@ -55,16 +55,21 @@ class DatabaseSeeder extends Seeder
                 elseif (stripos($jurusan, 'Sabu Raijua') !== false) $campusShort = 'sbj';
                 elseif (stripos($jurusan, 'Internasional') !== false) $campusShort = 'int';
 
-                // Shorten Prodi Name (e.g., Teknik Informatika -> ti)
-                $words = explode(' ', preg_replace('/[^a-z0-9 ]/i', '', $prodi));
+                // Clean Prodi Name for email (e.g., "D4 Teknik Informatika" -> "ti")
+                $cleanProdi = preg_replace('/^(D3|D4)\s+/i', '', $prodi);
+                $words = explode(' ', preg_replace('/[^a-z0-9 ]/i', '', $cleanProdi));
                 $prodiShort = '';
                 foreach ($words as $word) {
-                    if (strlen($word) > 2) $prodiShort .= strtolower($word[0]);
+                    if (strlen($word) >= 2) $prodiShort .= strtolower($word[0]);
                 }
                 
-                // Fallback if prodiShort is too short or empty
+                // Special cases for better readability
+                if (stripos($cleanProdi, 'Informatika') !== false) $prodiShort = 'ti';
+                if (stripos($cleanProdi, 'Sektor Publik') !== false) $prodiShort = 'asp';
+                if (stripos($cleanProdi, 'Gizi Klinik') !== false) $prodiShort = 'gzk';
+                
                 if (strlen($prodiShort) < 2) {
-                    $prodiShort = strtolower(substr(preg_replace('/[^a-z0-9]/i', '', $prodi), 0, 5));
+                    $prodiShort = strtolower(substr(preg_replace('/[^a-z0-9]/i', '', $cleanProdi), 0, 3));
                 }
 
                 // Final Email: kaprodi.ti.jbr@polije.ac.id
