@@ -53,8 +53,7 @@ SPESIFIKASI TEKNIS DAN DOKUMENTASI SISTEM SPK KIP-K
    - tb_user (id_user, role, prodi, jurusan) -> Relasi ke prodi untuk filter kaprodi.
    - tb_mahasiswa (nim, nama, prodi, jurusan) -> Data utama.
    - tb_kriteria (id_kriteria, kode, nama, jenis, nilai_bobot) -> Referensi kriteria.
-   - tb_sub_kriteria (id_subkriteria, id_kriteria, nilai) -> Detail skor per kriteria.
-   - tb_alternatif (id_alternatif, nim, tahun, c1-c6) -> Mahasiswa yang ikut seleksi di tahun X.
+   - tb_kategorisasi_kriteria (id_kategorisasi_kriteria, id_kriteria, nilai) -> Detail skor per kriteria.   - tb_alternatif (id_alternatif, nim, tahun, c1-c6) -> Mahasiswa yang ikut seleksi di tahun X.
    - tb_hasil_perhitungan (id_hasil, id_alternatif, leaving_flow, entering_flow, net_flow, ranking, status) -> Hasil final PROMETHEE.
 
 6. PANDUAN PENGEMBANGAN (MAINTENANCE)
