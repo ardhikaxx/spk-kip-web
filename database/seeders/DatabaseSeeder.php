@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Bobot;
 use App\Models\Kriteria;
-use App\Models\SubKriteria;
+use App\Models\KategorisasiKriteria;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -110,11 +110,12 @@ class DatabaseSeeder extends Seeder
             );
 
             foreach ($subs as $label => $value) {
-                SubKriteria::updateOrCreate(
-                    ['id_kriteria' => $criterion->id_kriteria, 'nama_subkriteria' => $label],
+                KategorisasiKriteria::updateOrCreate(
+                    ['id_kriteria' => $criterion->id_kriteria, 'nama_kategorisasi' => $label],
                     ['nilai' => $value]
                 );
             }
         }
     }
 }
+
