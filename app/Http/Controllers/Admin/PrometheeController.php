@@ -17,7 +17,7 @@ class PrometheeController extends Controller
         $years = Alternatif::select('tahun')->distinct()->orderByDesc('tahun')->pluck('tahun');
         $tahun = (int) ($request->query('tahun') ?: ($years->first() ?: now()->year));
         $kriteria = Kriteria::with('bobot')->orderBy('kode_kriteria')->get();
-        $totalWeight = round($kriteria->sum(fn ($item) => (float) ($item->bobot->nilai_bobot ?? $item->nilai_bobot)), 4);
+        $totalWeight = round($kriteria->sum(fn ($item) => (float) ($item->bobot->nilai_bobot ?? $item->nilai_bobot)), 2);
 
         return view('admin.promethee.index', [
             'kriteria' => $kriteria,
