@@ -20,8 +20,8 @@ class BobotController extends Controller
         $total = array_sum($data['bobot']);
 
         if (abs($total - 1.0) > 0.000001) {
-            $currentTotal = round($total, 6);
-            return back()->withErrors(['bobot' => "Total bobot harus 1.000000. Total saat ini {$currentTotal}."])->withInput();
+            $currentTotal = round($total, 2);
+            return back()->withErrors(['bobot' => "Total bobot harus 1. Total saat ini {$currentTotal}."])->withInput();
         }
 
         foreach ($data['bobot'] as $idKriteria => $nilai) {
