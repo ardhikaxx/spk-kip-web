@@ -15,7 +15,7 @@
                         <input class="form-control input-bobot" type="number" step="any" min="0" max="1" name="bobot[{{ $row->id_kriteria }}]" value="{{ old("bobot.{$row->id_kriteria}", (float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot)) }}" required>
                     </div>
                 @endforeach
-                <div class="alert alert-warning small"><i class="bi bi-exclamation-triangle"></i> Total bobot harus bernilai 1.000000.</div>
+                <div class="alert alert-warning small"><i class="bi bi-exclamation-triangle"></i> Total bobot harus bernilai 1.</div>
                 <div class="d-flex gap-2 flex-wrap"><button class="btn-spk-primary"><i class="bi bi-save"></i> Simpan Bobot</button><a href="{{ route('promethee.index') }}" class="btn-spk-outline">Lanjutkan ke Perhitungan</a></div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="card-spk">
                 <div class="card-header-spk">Ringkasan Bobot</div>
                 @foreach($kriteria as $row)
-                    <div class="d-flex justify-content-between py-2 border-bottom"><span>{{ $row->kode_kriteria }} - {{ $row->nama_kriteria }}</span><strong class="summary-bobot">{{ (float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot) }}</strong></div>
+                    <div class="d-flex justify-content-between py-2 border-bottom"><span>{{ $row->kode_kriteria }} - {{ $row->nama_kriteria }}</span><strong class="summary-bobot">{{ number_format((float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot), 2) }}</strong></div>
                 @endforeach
                 <div class="d-flex justify-content-between align-items-center mt-3"><span class="fw-bold">Total Bobot</span><span id="total-bobot" class="fw-bold fs-5">0</span></div>
                 <button class="btn-spk-primary w-100 justify-content-center mt-3"><i class="bi bi-save"></i> Simpan Bobot</button>
@@ -38,12 +38,13 @@
 function hitungTotalBobot() {
     let total = 0;
     document.querySelectorAll('.input-bobot').forEach(input => total += parseFloat(input.value) || 0);
-    total = Math.round(total * 1000000) / 1000000;
+    const formattedTotal = total.toFixed(2);
     const el = document.getElementById('total-bobot');
-    el.textContent = parseFloat(total.toFixed(6));
+    el.textContent = formattedTotal;
+    
     el.classList.remove('text-danger', 'text-warning', 'text-success');
-    if (total > 1.000001) el.classList.add('text-danger');
-    else if (total < 0.999999) el.classList.add('text-warning');
+    if (total > 1.001) el.classList.add('text-danger');
+    else if (total < 0.999) el.classList.add('text-warning');
     else el.classList.add('text-success');
 }
 document.querySelectorAll('.input-bobot').forEach(input => input.addEventListener('input', hitungTotalBobot));
