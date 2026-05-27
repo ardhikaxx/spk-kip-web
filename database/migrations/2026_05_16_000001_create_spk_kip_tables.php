@@ -62,14 +62,14 @@ return new class extends Migration
             $table->string('kode_kriteria', 10)->unique();
             $table->string('nama_kriteria');
             $table->enum('jenis_kriteria', ['benefit', 'cost'])->default('benefit');
-            $table->decimal('nilai_bobot', 8, 4)->default(0);
+            $table->decimal('nilai_bobot', 8, 2)->default(0);
             $table->timestamps();
         });
 
-        Schema::create('tb_sub_kriteria', function (Blueprint $table) {
-            $table->id('id_subkriteria');
+        Schema::create('tb_kategorisasi_kriteria', function (Blueprint $table) {
+            $table->id('id_kategorisasi_kriteria');
             $table->foreignId('id_kriteria')->constrained('tb_kriteria', 'id_kriteria')->cascadeOnDelete();
-            $table->string('nama_subkriteria');
+            $table->string('nama_kategorisasi');
             $table->integer('nilai')->default(1);
             $table->timestamps();
         });
@@ -77,7 +77,7 @@ return new class extends Migration
         Schema::create('tb_bobot', function (Blueprint $table) {
             $table->id('id_bobot');
             $table->foreignId('id_kriteria')->unique()->constrained('tb_kriteria', 'id_kriteria')->cascadeOnDelete();
-            $table->decimal('nilai_bobot', 8, 4)->default(0);
+            $table->decimal('nilai_bobot', 8, 2)->default(0);
             $table->timestamps();
         });
 
@@ -101,7 +101,7 @@ return new class extends Migration
             $table->decimal('entering_flow', 12, 8)->default(0);
             $table->decimal('net_flow', 12, 8)->default(0);
             $table->integer('ranking');
-            $table->string('status')->default('Tidak Penerima');
+            $table->string('status')->default('Bukan Penerima');
             $table->year('tahun');
             $table->timestamps();
             $table->unique(['id_alternatif', 'tahun']);
@@ -113,7 +113,7 @@ return new class extends Migration
         Schema::dropIfExists('tb_hasil_perhitungan');
         Schema::dropIfExists('tb_alternatif');
         Schema::dropIfExists('tb_bobot');
-        Schema::dropIfExists('tb_sub_kriteria');
+        Schema::dropIfExists('tb_kategorisasi_kriteria');
         Schema::dropIfExists('tb_kriteria');
         Schema::dropIfExists('tb_mahasiswa');
         Schema::dropIfExists('sessions');
