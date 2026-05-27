@@ -30,7 +30,7 @@ class AdminDashboardController extends Controller
             ->get();
 
         $penerimaCount = HasilPerhitungan::where('status', 'Penerima')->where('tahun', $tahun)->count();
-        $tidakPenerimaCount = HasilPerhitungan::where('status', 'Tidak Penerima')->where('tahun', $tahun)->count();
+        $tidakPenerimaCount = HasilPerhitungan::where('status', 'Bukan Penerima')->where('tahun', $tahun)->count();
 
         $jurusanStats = \App\Models\Mahasiswa::select('jurusan', \DB::raw('count(*) as total'))
             ->whereNotNull('jurusan')
@@ -47,7 +47,7 @@ class AdminDashboardController extends Controller
             'chartLabels' => $hasil->map(fn ($row) => $row->alternatif?->mahasiswa?->nama_mhs)->values(),
             'chartValues' => $hasil->pluck('net_flow')->map(fn ($value) => (float) $value)->values(),
 
-            'distributionLabels' => ['Penerima', 'Tidak Penerima'],
+            'distributionLabels' => ['Penerima', 'Bukan Penerima'],
             'distributionValues' => ($penerimaCount > 0 || $tidakPenerimaCount > 0) ? [$penerimaCount, $tidakPenerimaCount] : null,
 
             'jurusanLabels' => $jurusanStats->pluck('jurusan')->values(),
