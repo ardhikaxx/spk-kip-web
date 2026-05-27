@@ -225,7 +225,7 @@ Border radius item: `10px` (dalam sidebar, sedikit indent kiri-kanan)
 | `bi-people-fill` | Data Mahasiswa |
 | `bi-person-badge` | Data Pengguna |
 | `bi-file-text` | Data Kriteria |
-| `bi-folder-fill` | Data Subkriteria |
+| `bi-folder-fill` | Data Kategorisasi Kriteria |
 | `bi-gear-fill` | Pengaturan Bobot |
 | `bi-table` / grid icon | Kelola Alternatif |
 | `bi-calculator` | Hitung Promethee |
@@ -794,12 +794,12 @@ new Chart(ctx, {
 
 ---
 
-## 15. Halaman Data Sub Kriteria
+## 15. Halaman Data Kategorisasi Kriteria
 
 ### Layout — Index (Daftar Card Kriteria)
 ```
-[Breadcrumb: Home / Data Sub Kriteria]
-[Judul: Data Sub Kriteria]
+[Breadcrumb: Home / Data Kategorisasi Kriteria]
+[Judul: Data Kategorisasi Kriteria]
 
 [Grid 2 atau 3 kolom — card per kriteria]
   Card 1: [Icon Kriteria] K1 - Status KIP         [Tombol Edit →]
@@ -854,12 +854,12 @@ new Chart(ctx, {
 }
 ```
 
-### Halaman Edit Sub Kriteria
+### Halaman Edit Kategorisasi Kriteria
 ```
-[Breadcrumb: Home / Data Sub Kriteria / K1 - Status KIP]
-[Judul: Kelola Sub Kriteria — K1 Status KIP]
+[Breadcrumb: Home / Data Kategorisasi Kriteria / K1 - Status KIP]
+[Judul: Kelola Kategorisasi Kriteria — K1 Status KIP]
 
-[Card: Form Sub Kriteria]
+[Card: Form Kategorisasi Kriteria]
   [Tabel dinamis dengan header: Nilai Skala | Deskripsi | Hapus]
     Row 1: [input number] | [input text] | [icon hapus merah]
     Row 2: [input number] | [input text] | [icon hapus merah]
@@ -881,7 +881,7 @@ new Chart(ctx, {
 [Row]
   [Col-7: Card Input Bobot]           [Col-5: Card Ringkasan Bobot]
     Form label + input per kriteria     List kode - nama - nilai bobot
-    ⚠️ Peringatan total = 1.0           <hr>
+    ⚠️ Peringatan total = 1.00           <hr>
     [Tombol Simpan Bobot]               Total: [nilai — warna dinamis]
     [Tombol Lanjut ke Perhitungan]      [Tombol Simpan Bobot]
 ```
@@ -889,9 +889,9 @@ new Chart(ctx, {
 **Total bobot warna dinamis:**
 ```css
 .total-bobot { font-size: 18px; font-weight: 700; transition: color 0.3s; }
-.total-bobot.kurang   { color: var(--color-warning); }   /* < 1.0 — ungu */
-.total-bobot.lebih    { color: var(--color-danger); }    /* > 1.0 — pink/merah */
-.total-bobot.tepat    { color: var(--color-success); }   /* = 1.0 — cyan/hijau */
+.total-bobot.kurang   { color: var(--color-warning); }   /* < 1.00 — ungu */
+.total-bobot.lebih    { color: var(--color-danger); }    /* > 1.00 — pink/merah */
+.total-bobot.tepat    { color: var(--color-success); }   /* = 1.00 — cyan/hijau */
 ```
 
 **Alert info bobot:**
@@ -1171,7 +1171,7 @@ Swal.fire({
   didOpen: () => Swal.showLoading(),
 });
 
-// Sukses simpan bobot (total = 1.0)
+// Sukses simpan bobot (total = 1.00)
 SwalSpk.fire({
   icon: 'success',
   title: 'Berhasil!',
@@ -1184,14 +1184,14 @@ SwalSpk.fire({
 SwalSpk.fire({
   icon: 'warning',
   title: 'Total Bobot Belum Lengkap',
-  text: 'Total bobot saat ini kurang dari 1.0. Pastikan total bobot tepat 1.0 sebelum menyimpan.',
+  text: 'Total bobot saat ini kurang dari 1.00. Pastikan total bobot tepat 1.00 sebelum menyimpan.',
 });
 
 // Error bobot lebih
 SwalSpk.fire({
   icon: 'error',
-  title: 'Total Bobot Melebihi 1.0',
-  text: 'Kurangi nilai bobot agar total tidak melebihi 1.0.',
+  title: 'Total Bobot Melebihi 1.00',
+  text: 'Kurangi nilai bobot agar total tidak melebihi 1.00.',
 });
 ```
 
