@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\HasilController;
 use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\PrometheeController;
-use App\Http\Controllers\Admin\SubKriteriaController;
+use App\Http\Controllers\Admin\KategorisasiKriteriaController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -46,8 +46,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         ->parameters(['kriteria' => 'kriterium'])
         ->except(['create', 'show', 'edit']);
 
-    Route::resource('sub-kriteria', SubKriteriaController::class)
-        ->parameters(['sub-kriteria' => 'sub_kriterium'])
+    Route::resource('kategorisasi-kriteria', KategorisasiKriteriaController::class)
+        ->parameters(['kategorisasi-kriteria' => 'kategorisasi_kriterium'])
         ->only(['index', 'edit', 'update']);
 
     Route::get('bobot', [BobotController::class, 'index'])->name('bobot.index');
