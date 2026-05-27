@@ -36,8 +36,8 @@ class PrometheeService
 
         $totalWeight = array_sum($weightVector);
         if (abs($totalWeight - 1.0) > 0.000001) {
-            $formattedTotal = round($totalWeight, 6);
-            throw new RuntimeException("Total bobot harus 1.000000. Total saat ini {$formattedTotal}.");
+            $formattedTotal = round($totalWeight, 2);
+            throw new RuntimeException("Total bobot harus 1. Total saat ini {$formattedTotal}.");
         }
 
         $rows = $alternatives->values();
@@ -98,7 +98,7 @@ class PrometheeService
                     'entering_flow' => round($row['entering_flow'], 8),
                     'net_flow' => round($row['net_flow'], 8),
                     'ranking' => $index + 1,
-                    'status' => ($index + 1) <= $quota ? 'Penerima' : 'Tidak Penerima',
+                    'status' => ($index + 1) <= $quota ? 'Penerima' : 'Bukan Penerima',
                     'tahun' => $tahun,
                 ]);
             }
