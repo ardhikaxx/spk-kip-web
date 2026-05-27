@@ -11,12 +11,25 @@ class KriteriaController extends Controller
 {
     public function index()
     {
-        return view('admin.kriteria.index', ['kriteria' => Kriteria::orderBy('kode_kriteria')->paginate(10)]);
+        $kriteria = Kriteria::orderBy('kode_kriteria')->paginate(10);
+        $totalWeight = Kriteria::sum('nilai_bobot');
+        
+        return view('admin.kriteria.index', [
+            'kriteria' => $kriteria,
+            'totalWeight' => $totalWeight
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $this->validated($request);
+        
+        $currentTotal = Kriteria::sum('nilai_bobot');
+        if (($currentTotal + $data['nilai_bobot']) > 1.0001) {
+            $maxAllowed = 1.0 - $currentTotal;
+            return back()->withErrors(['nilai_bobot' => "Total bobot tidak boleh melebihi 1. Sisa bobot yang tersedia: " . number_format($maxAllowed, 2)])->withInput();
+        }
+
         $criterion = Kriteria::create($data);
         Bobot::create(['id_kriteria' => $criterion->id_kriteria, 'nilai_bobot' => $data['nilai_bobot']]);
 
@@ -26,6 +39,13 @@ class KriteriaController extends Controller
     public function update(Request $request, Kriteria $kriterium)
     {
         $data = $this->validated($request, $kriterium->id_kriteria);
+        
+        $currentTotal = Kriteria::where('id_kriteria', '!=', $kriterium->id_kriteria)->sum('nilai_bobot');
+        if (($currentTotal + $data['nilai_bobot']) > 1.0001) {
+            $maxAllowed = 1.0 - $currentTotal;
+            return back()->withErrors(['nilai_bobot' => "Total bobot tidak boleh melebihi 1. Sisa bobot yang tersedia: " . number_format($maxAllowed, 2)])->withInput();
+        }
+
         $kriterium->update($data);
         Bobot::updateOrCreate(['id_kriteria' => $kriterium->id_kriteria], ['nilai_bobot' => $data['nilai_bobot']]);
 
