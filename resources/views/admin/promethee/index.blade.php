@@ -30,7 +30,7 @@
             <div class="table-responsive">
                 <table class="table-spk">
                     <thead><tr><th>Kode</th><th>Nama Kriteria</th><th>Bobot</th></tr></thead>
-                    <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ (float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot) }}</td></tr>@endforeach</tbody>
+                    <tbody>@foreach($kriteria as $row)<tr><td>{{ $row->kode_kriteria }}</td><td>{{ $row->nama_kriteria }}</td><td>{{ number_format((float) ($row->bobot->nilai_bobot ?? $row->nilai_bobot), 2) }}</td></tr>@endforeach</tbody>
                 </table>
             </div>
         </div>
