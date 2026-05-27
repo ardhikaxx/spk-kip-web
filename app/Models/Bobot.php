@@ -12,7 +12,7 @@ class Bobot extends Model
 
     protected $fillable = ['id_kriteria', 'nilai_bobot'];
 
-    protected $casts = ['nilai_bobot' => 'decimal:4'];
+    protected $casts = ['nilai_bobot' => 'decimal:2'];
 
     public function kriteria()
     {
