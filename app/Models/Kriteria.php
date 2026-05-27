@@ -12,11 +12,11 @@ class Kriteria extends Model
 
     protected $fillable = ['kode_kriteria', 'nama_kriteria', 'jenis_kriteria', 'nilai_bobot'];
 
-    protected $casts = ['nilai_bobot' => 'decimal:4'];
+    protected $casts = ['nilai_bobot' => 'decimal:2'];
 
-    public function subKriteria()
+    public function kategorisasiKriteria()
     {
-        return $this->hasMany(SubKriteria::class, 'id_kriteria', 'id_kriteria')->orderByDesc('nilai');
+        return $this->hasMany(KategorisasiKriteria::class, 'id_kriteria', 'id_kriteria')->orderByDesc('nilai');
     }
 
     public function bobot()
