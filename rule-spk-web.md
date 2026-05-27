@@ -66,12 +66,12 @@ Website ini adalah Sistem Pendukung Keputusan (SPK) berbasis web untuk membantu 
 | jenis_kriteria | ENUM('benefit','cost') | Jenis kriteria |
 | nilai_bobot | DECIMAL(5,2) | Bobot kriteria (0–1) |
 
-### Tabel `tb_sub_kriteria`
+### Tabel `tb_kategorisasi_kriteria`
 | Kolom | Tipe | Keterangan |
 |---|---|---|
-| id_subkriteria | INT, PK, AI | Primary key |
+| id_kategorisasi_kriteria | INT, PK, AI | Primary key |
 | id_kriteria | INT, FK | Relasi ke tb_kriteria |
-| nama_subkriteria | VARCHAR | Deskripsi sub kriteria |
+| nama_kategorisasi | VARCHAR | Deskripsi kategorisasi kriteria |
 | nilai | INT | Nilai skala numerik |
 
 ### Tabel `tb_bobot`
@@ -86,7 +86,7 @@ Website ini adalah Sistem Pendukung Keputusan (SPK) berbasis web untuk membantu 
 |---|---|---|
 | id_alternatif | INT, PK, AI | Primary key |
 | nim | VARCHAR, FK | Relasi ke tb_mahasiswa |
-| id_subkriteria | INT, FK | Relasi ke tb_sub_kriteria |
+| id_kategorisasi_kriteria | INT, FK | Relasi ke tb_kategorisasi_kriteria |
 | tahun | YEAR | Tahun seleksi |
 
 ### Tabel `tb_hasil_perhitungan`
@@ -119,7 +119,7 @@ resources/
 │   │   │   └── index.blade.php
 │   │   ├── kriteria/
 │   │   │   └── index.blade.php
-│   │   ├── sub-kriteria/
+│   │   ├── kategorisasi-kriteria/
 │   │   │   ├── index.blade.php
 │   │   │   └── edit.blade.php
 │   │   ├── bobot/
@@ -262,22 +262,22 @@ Layout utama harus mendukung `@stack` untuk JavaScript dan CSS per-halaman:
 
 ---
 
-### 6.4 Data Sub Kriteria
+### 6.4 Data Kategorisasi Kriteria
 
-**Route:** `GET /admin/sub-kriteria`
+**Route:** `GET /admin/kategorisasi-kriteria`
 
 **Tampilan halaman index:**
 - Daftar **card per kriteria** — setiap card berisi:
   - Icon sesuai kriteria + Kode Kriteria - Nama Kriteria
-  - Tombol **Edit** di sisi kanan (justify-between), arahkan ke halaman edit sub kriteria
+  - Tombol **Edit** di sisi kanan (justify-between), arahkan ke halaman edit kategorisasi kriteria
 
-**Route halaman edit sub kriteria:** `GET /admin/sub-kriteria/{id}/edit`
+**Route halaman edit kategorisasi kriteria:** `GET /admin/kategorisasi-kriteria/{id}/edit`
 
 **Komponen UI halaman edit:**
 - Header: Kode Kriteria - Nama Kriteria
 - **Tabel/Form dinamis** dengan kolom:
   - Nilai Skala (input number)
-  - Deskripsi Sub Kriteria (input text)
+  - Deskripsi Kategorisasi (input text)
   - Tombol **Hapus** (icon minus/trash) — hapus baris tersebut
 - **Tombol Tambah** — menambah baris baru di bawah
 - **Tombol Simpan Semua Perubahan** — submit semua data sekaligus (bulk save via AJAX atau form biasa)
@@ -293,16 +293,16 @@ Layout utama harus mendukung `@stack` untuk JavaScript dan CSS per-halaman:
 **Kolom Kiri — Card Input Bobot:**
 - Form input bobot untuk setiap kriteria (label: Kode - Nama Kriteria, input: number step 0.01)
 - Peringatan di bawah form:
-  > ⚠️ Total bobot harus bernilai 1.0 (100%). Gunakan desimal untuk input bobot.
+  > ⚠️ Total bobot harus bernilai 1 (100%). Gunakan desimal untuk input bobot.
 - Tombol **Simpan Bobot**
 
 **Kolom Kanan — Card Ringkasan Bobot:**
 - List: `Kode - Nama Kriteria` ... `Nilai Bobot`
 - Garis pembatas (`<hr>`)
 - Total bobot dengan **warna dinamis:**
-  - 🔴 Merah → total > 1.0 (SweetAlert: "Total bobot melebihi 1.0, harap periksa kembali")
-  - 🟡 Kuning → total < 1.0 (SweetAlert: "Total bobot belum mencapai 1.0, lengkapi bobot")
-  - 🟢 Hijau → total = 1.0 (SweetAlert: "Bobot berhasil disimpan!")
+  - 🔴 Merah → total > 1.00 (SweetAlert: "Total bobot melebihi 1.00, harap periksa kembali")
+  - 🟡 Kuning → total < 1.00 (SweetAlert: "Total bobot belum mencapai 1.00, lengkapi bobot")
+  - 🟢 Hijau → total = 1.00 (SweetAlert: "Bobot berhasil disimpan!")
 - Tombol **Simpan Bobot**
 - Tombol **Lanjutkan ke Perhitungan** → redirect ke `/admin/promethee`
 
@@ -320,10 +320,10 @@ function hitungTotalBobot() {
     });
     total = Math.round(total * 10000) / 10000;
     const elTotal = document.getElementById('total-bobot');
-    elTotal.textContent = total.toFixed(4);
+    elTotal.textContent = total.toFixed(2);
     elTotal.classList.remove('text-danger','text-warning','text-success');
-    if (total > 1.0) elTotal.classList.add('text-danger');
-    else if (total < 1.0) elTotal.classList.add('text-warning');
+    if (total > 1.00) elTotal.classList.add('text-danger');
+    else if (total < 1.00) elTotal.classList.add('text-warning');
     else elTotal.classList.add('text-success');
 }
 ```
@@ -462,7 +462,7 @@ public function getMahasiswaDetail($nim)
         return response()->json(['message' => 'Data tidak ditemukan'], 404);
     }
 
-    // 1. Status KIP
+    // 1. Kategorisasi KIP
     $skorKip = !empty($mhs->kip) && str_contains($mhs->kip, 'KIPK') ? 'Ada' : 'Tidak Ada';
 
     // 2. DTKS
@@ -593,7 +593,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::post('mahasiswa/import', [MahasiswaController::class, 'import'])->name('mahasiswa.import');
 
     Route::resource('kriteria', KriteriaController::class);
-    Route::resource('sub-kriteria', SubKriteriaController::class);
+    Route::resource('kategorisasi-kriteria', KategorisasiKriteriaController::class);
 
     Route::get('bobot', [BobotController::class, 'index'])->name('bobot.index');
     Route::post('bobot', [BobotController::class, 'store'])->name('bobot.store');
@@ -786,7 +786,7 @@ public function downloadPdf($tahun)
 - [ ] Halaman Admin: Dashboard
 - [ ] Halaman Admin: Data Mahasiswa + Import Excel
 - [ ] Halaman Admin: Data Kriteria
-- [ ] Halaman Admin: Data Sub Kriteria
+- [ ] Halaman Admin: Data Kategorisasi Kriteria
 - [ ] Halaman Admin: Pengaturan Bobot
 - [ ] Halaman Admin: Kelola Alternatif + AJAX autoisi
 - [ ] Halaman Admin: Hitung PROMETHEE (algoritma lengkap)
