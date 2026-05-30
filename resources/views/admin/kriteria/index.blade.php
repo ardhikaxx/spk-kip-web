@@ -7,7 +7,7 @@
     <div class="card-header-spk">
         <span>Tabel Data Kriteria</span>
         @if($totalWeight >= 1)
-            <button class="btn-spk-primary" disabled title="Total bobot sudah mencapai 1.00"><i class="bi bi-plus-lg"></i> Tambah Kriteria</button>
+            <button class="btn-spk-primary" id="btnTambahKriteriaFull"><i class="bi bi-plus-lg"></i> Tambah Kriteria</button>
         @else
             <button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bi bi-plus-lg"></i> Tambah Kriteria</button>
         @endif
@@ -76,6 +76,18 @@
     document.addEventListener('DOMContentLoaded', function() {
         const totalWeight = {{ $totalWeight }};
         
+        const btnFull = document.getElementById('btnTambahKriteriaFull');
+        if (btnFull) {
+            btnFull.addEventListener('click', function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Batas Bobot Tercapai',
+                    text: 'Total bobot seluruh kriteria sudah mencapai 1.00. Anda tidak dapat menambah kriteria baru kecuali mengurangi bobot kriteria yang sudah ada.',
+                    confirmButtonColor: '#1a3c5e'
+                });
+            });
+        }
+
         // Handle all modals (Create and Edit)
         document.querySelectorAll('.modal-spk').forEach(modal => {
             const inputBobot = modal.querySelector('input[name="nilai_bobot"]');
