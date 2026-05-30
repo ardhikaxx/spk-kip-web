@@ -140,9 +140,9 @@
                             <div class="col-md-6">
                                 <label class="form-label">{{ $label }}</label>
                                 @if($name === 'desil')
-                                    <input type="number" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}">
+                                    <input type="number" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}" required>
                                 @else
-                                    <input type="text" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}">
+                                    <input type="text" name="{{ $name }}" class="form-control" placeholder="Masukkan {{ $label }}" required>
                                 @endif
                             </div>
                             @endif
@@ -222,9 +222,9 @@
                                 <div class="col-md-6">
                                     <label class="form-label">{{ $label }}</label>
                                     @if($name === 'desil')
-                                        <input type="number" name="{{ $name }}" class="form-control" value="{{ $row->$name }}">
+                                        <input type="number" name="{{ $name }}" class="form-control" value="{{ $row->$name }}" required>
                                     @else
-                                        <input type="text" name="{{ $name }}" class="form-control" value="{{ $row->$name }}">
+                                        <input type="text" name="{{ $name }}" class="form-control" value="{{ $row->$name }}" required>
                                     @endif
                                 </div>
                                 @endif
