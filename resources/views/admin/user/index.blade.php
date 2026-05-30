@@ -22,9 +22,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($users as $index => $user)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $users->firstItem() + $index }}</td>
                             <td class="fw-bold">{{ $user->nama_lengkap }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
@@ -68,6 +68,7 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-3">{{ $users->links('partials.pagination') }}</div>
     </div>
 
     <!-- Modal User -->
