@@ -21,7 +21,7 @@ class UserController extends Controller
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:tb_user',
-            'nomor_telepon' => 'nullable|string|max:20',
+            'nomor_telepon' => 'required|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
             'prodi' => 'required_if:role,kaprodi|nullable|string|max:255',
             'jurusan' => 'required_if:role,kaprodi|nullable|string|max:255',
@@ -48,7 +48,7 @@ class UserController extends Controller
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('tb_user')->ignore($user->id_user, 'id_user')],
-            'nomor_telepon' => 'nullable|string|max:20',
+            'nomor_telepon' => 'required|string|max:20',
             'role' => ['required', Rule::in(['admin', 'kaprodi'])],
             'prodi' => 'required_if:role,kaprodi|nullable|string|max:255',
             'jurusan' => 'required_if:role,kaprodi|nullable|string|max:255',
