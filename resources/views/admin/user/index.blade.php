@@ -4,7 +4,11 @@
 
 @section('content')
     <div class="card-spk">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="card-header-spk">
+            <form class="search-spk" method="GET">
+                <i class="bi bi-search search-icon"></i>
+                <input name="search" value="{{ $search }}" placeholder="Cari Nama, Email atau Role...">
+            </form>
             <button class="btn-spk-primary" data-bs-toggle="modal" data-bs-target="#modalUser">
                 <i class="bi bi-person-plus-fill"></i> Tambah Akun
             </button>
