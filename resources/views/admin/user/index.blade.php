@@ -95,7 +95,7 @@
                         <div class="mb-3">
                             <label class="form-label">Nomor Telepon</label>
                             <input type="text" name="nomor_telepon" class="form-control"
-                                placeholder="Masukkan nomor telepon (Opsional)">
+                                placeholder="Masukkan nomor telepon" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Role Pengguna</label>
