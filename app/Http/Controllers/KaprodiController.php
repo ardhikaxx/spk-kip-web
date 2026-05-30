@@ -14,38 +14,7 @@ class KaprodiController extends Controller
 
         $mahasiswa = Mahasiswa::query()
             ->when($user->role === 'kaprodi', function ($query) use ($user) {
-                $coreProdi = $this->getCoreName($user->prodi);
-                $campus = $this->getCampusName($user->jurusan);
-
-                // Apply prodi filter
-                if ($coreProdi) {
-                    // Handle common typos in imported data
-                    $typoMap = [
-                        'Informatika' => 'Infom', // Matches Informatika and Infomatika
-                        'Akuntansi' => 'Akutansi', // Matches Akuntansi and Akutansi
-                    ];
-                    
-                    $searchProdi = $coreProdi;
-                    foreach ($typoMap as $correct => $typo) {
-                        if (stripos($coreProdi, $correct) !== false) {
-                            $searchProdi = str_ireplace($correct, $typo, $coreProdi);
-                            break;
-                        }
-                    }
-                    
-                    $query->where('prodi', 'LIKE', "%{$searchProdi}%");
-                }
-
-                // Apply campus filter
-                if ($campus) {
-                    $query->where('prodi', 'LIKE', "%{$campus}%");
-                } else {
-                    // If no specific campus (Main Campus), exclude other campuses
-                    $query->where(function($q) {
-                        $q->where('prodi', 'NOT LIKE', '%PSDKU%')
-                          ->where('prodi', 'NOT LIKE', '%Kampus%');
-                    });
-                }
+                $this->applyKaprodiFilter($query, $user);
             })
             ->when($search, fn ($query) => $query->where(function($q) use ($search) {
                 $q->where('nim', 'like', "%{$search}%")
@@ -56,6 +25,54 @@ class KaprodiController extends Controller
             ->withQueryString();
 
         return view('kaprodi.dashboard', compact('mahasiswa', 'search'));
+    }
+
+    /**
+     * Applies student filtering based on Kaprodi's assigned prodi and jurusan.
+     */
+    private function applyKaprodiFilter($query, $user)
+    {
+        $coreProdi = $this->getCoreName($user->prodi);
+        $campus = $this->getCampusName($user->jurusan);
+
+        // Filter by Program Studi (and handle typos)
+        if ($coreProdi) {
+            $query->where(function ($q) use ($coreProdi) {
+                // Direct match
+                $q->where('prodi', 'LIKE', "%{$coreProdi}%")
+                  ->orWhere('jurusan', 'LIKE', "%{$coreProdi}%");
+
+                // Handle common typos (Informatika -> Infomatika, Akuntansi -> Akutansi)
+                $typos = [];
+                if (stripos($coreProdi, 'Informatika') !== false) {
+                    $typos[] = str_ireplace('Informatika', 'Infomatika', $coreProdi);
+                }
+                if (stripos($coreProdi, 'Akuntansi') !== false) {
+                    $typos[] = str_ireplace('Akuntansi', 'Akutansi', $coreProdi);
+                }
+
+                foreach ($typos as $typo) {
+                    $q->orWhere('prodi', 'LIKE', "%{$typo}%")
+                      ->orWhere('jurusan', 'LIKE', "%{$typo}%");
+                }
+            });
+        }
+
+        // Filter by Campus/Jurusan
+        if ($campus) {
+            $query->where(function ($q) use ($campus) {
+                $q->where('prodi', 'LIKE', "%{$campus}%")
+                  ->orWhere('jurusan', 'LIKE', "%{$campus}%");
+            });
+        } else {
+            // If no specific campus (Main Campus), exclude other campuses
+            $query->where(function ($q) {
+                $q->where('prodi', 'NOT LIKE', '%PSDKU%')
+                  ->where('prodi', 'NOT LIKE', '%Kampus%')
+                  ->where('jurusan', 'NOT LIKE', '%PSDKU%')
+                  ->where('jurusan', 'NOT LIKE', '%Kampus%');
+            });
+        }
     }
 
     /**
@@ -89,29 +106,7 @@ class KaprodiController extends Controller
 
         $mahasiswa = Mahasiswa::where('nim', $nim)
             ->when($user->role === 'kaprodi', function ($query) use ($user) {
-                $coreProdi = $this->getCoreName($user->prodi);
-                $campus = $this->getCampusName($user->jurusan);
-
-                if ($coreProdi) {
-                    $typoMap = ['Informatika' => 'Infom', 'Akuntansi' => 'Akutansi'];
-                    $searchProdi = $coreProdi;
-                    foreach ($typoMap as $correct => $typo) {
-                        if (stripos($coreProdi, $correct) !== false) {
-                            $searchProdi = str_ireplace($correct, $typo, $coreProdi);
-                            break;
-                        }
-                    }
-                    $query->where('prodi', 'LIKE', "%{$searchProdi}%");
-                }
-
-                if ($campus) {
-                    $query->where('prodi', 'LIKE', "%{$campus}%");
-                } else {
-                    $query->where(function($q) {
-                        $q->where('prodi', 'NOT LIKE', '%PSDKU%')
-                          ->where('prodi', 'NOT LIKE', '%Kampus%');
-                    });
-                }
+                $this->applyKaprodiFilter($query, $user);
             })
             ->firstOrFail();
 
@@ -124,29 +119,7 @@ class KaprodiController extends Controller
 
         $mahasiswa = Mahasiswa::where('nim', $nim)
             ->when($user->role === 'kaprodi', function ($query) use ($user) {
-                $coreProdi = $this->getCoreName($user->prodi);
-                $campus = $this->getCampusName($user->jurusan);
-
-                if ($coreProdi) {
-                    $typoMap = ['Informatika' => 'Infom', 'Akuntansi' => 'Akutansi'];
-                    $searchProdi = $coreProdi;
-                    foreach ($typoMap as $correct => $typo) {
-                        if (stripos($coreProdi, $correct) !== false) {
-                            $searchProdi = str_ireplace($correct, $typo, $coreProdi);
-                            break;
-                        }
-                    }
-                    $query->where('prodi', 'LIKE', "%{$searchProdi}%");
-                }
-
-                if ($campus) {
-                    $query->where('prodi', 'LIKE', "%{$campus}%");
-                } else {
-                    $query->where(function($q) {
-                        $q->where('prodi', 'NOT LIKE', '%PSDKU%')
-                          ->where('prodi', 'NOT LIKE', '%Kampus%');
-                    });
-                }
+                $this->applyKaprodiFilter($query, $user);
             })
             ->firstOrFail();
 
