@@ -43,8 +43,5 @@
     </button>
 </form>
 
-<div class="footer-text">
-    Gunakan kredensial default untuk demo:<br>
-    <code>admin@gmail.com</code> / <code>password</code>
-</div>
+
 @endsection
