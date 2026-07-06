@@ -42,13 +42,16 @@ class KaprodiController extends Controller
                 $q->where('prodi', 'LIKE', "%{$coreProdi}%")
                   ->orWhere('jurusan', 'LIKE', "%{$coreProdi}%");
 
-                // Handle common typos (Informatika -> Infomatika, Akuntansi -> Akutansi)
+                // Handle common typos (Informatika -> Infomatika, Akuntansi -> Akutansi, Teknologi -> Teknik)
                 $typos = [];
                 if (stripos($coreProdi, 'Informatika') !== false) {
                     $typos[] = str_ireplace('Informatika', 'Infomatika', $coreProdi);
                 }
                 if (stripos($coreProdi, 'Akuntansi') !== false) {
                     $typos[] = str_ireplace('Akuntansi', 'Akutansi', $coreProdi);
+                }
+                if (stripos($coreProdi, 'Teknologi') !== false) {
+                    $typos[] = str_ireplace('Teknologi', 'Teknik', $coreProdi);
                 }
 
                 foreach ($typos as $typo) {
@@ -69,8 +72,13 @@ class KaprodiController extends Controller
             $query->where(function ($q) {
                 $q->where('prodi', 'NOT LIKE', '%PSDKU%')
                   ->where('prodi', 'NOT LIKE', '%Kampus%')
-                  ->where('jurusan', 'NOT LIKE', '%PSDKU%')
-                  ->where('jurusan', 'NOT LIKE', '%Kampus%');
+                  ->where(function ($q) {
+                      $q->whereNull('jurusan')
+                        ->orWhere(function ($q) {
+                            $q->where('jurusan', 'NOT LIKE', '%PSDKU%')
+                              ->where('jurusan', 'NOT LIKE', '%Kampus%');
+                        });
+                  });
             });
         }
     }
