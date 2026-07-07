@@ -12,7 +12,6 @@
         .kop .institut { font-size: 18px; margin: 0; text-align: center; }
         .kop .alamat { margin: 2px 0; text-align: center; font-size: 10px; }
         .kop .kontak { margin: 2px 0; text-align: center; font-size: 10px; }
-        .kop hr { border: none; border-top: 1px solid #000; margin: 4px 0; }
         table { margin: 18px 0; }
         td { padding: 4px 8px; vertical-align: top; }
         .ttd { width: 260px; margin-left: auto; margin-top: 50px; text-align: center; }
@@ -27,7 +26,6 @@
             <div style="flex:1">
                 <div class="kementerian">KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI</div>
                 <div class="institut">POLITEKNIK NEGERI JEMBER</div>
-                <hr>
                 <div class="alamat">Jl. Mastrip PO.BOX 164 Telp 333532 - 333534 Fax 333531 Jember 68101</div>
                 <div class="kontak">Website : https://www.polije.ac.id E-Mail : politeknik@polije.ac.id</div>
             </div>
