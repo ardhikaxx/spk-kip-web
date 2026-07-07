@@ -29,7 +29,7 @@
                         <div class="modal-dialog modal-xl"><div class="modal-content">
                             <div class="modal-header"><h5 class="modal-title">Surat Rekomendasi</h5><button class="btn-close" data-bs-dismiss="modal" type="button"></button></div>
                             <div class="modal-body"><iframe src="{{ route('kaprodi.surat', $row->nim) }}" style="width:100%;height:620px;border:1px solid #CBD5E1;border-radius:8px"></iframe></div>
-                            <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button><a class="btn-spk-primary" href="{{ route('kaprodi.surat.download', $row->nim) }}" target="_blank">Download PDF</a></div>
+                            <div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal" type="button">Batal</button></div>
                         </div></div>
                     </div>
                 @empty
