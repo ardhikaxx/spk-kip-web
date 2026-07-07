@@ -41,7 +41,7 @@
         <p>Direkomendasikan untuk mengikuti proses seleksi penerima Beasiswa KIP-K sesuai ketentuan yang berlaku di Politeknik Negeri Jember.</p>
         <p>Surat rekomendasi ini dibuat untuk digunakan sebagaimana mestinya.</p>
         <div class="ttd">
-            <p>Jember, {{ now()->translatedFormat('d F Y') }}</p>
+            <p>Jember, {{ now()->locale('id')->translatedFormat('d F Y') }}</p>
             <p>Kaprodi,</p>
             <br><br><br>
             <p><strong>{{ auth()->user()->nama_lengkap ?? 'Kaprodi' }}</strong></p>
