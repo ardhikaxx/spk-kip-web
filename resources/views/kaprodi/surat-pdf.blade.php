@@ -8,10 +8,10 @@
         .surat { max-width: 760px; margin: 20px auto; padding: 40px; border: 1px solid #ccc; }
         .kop { display: flex; align-items: flex-start; gap: 16px; border-bottom: 3px solid #000; padding-bottom: 12px; margin-bottom: 28px; }
         .kop img { width: 72px; }
-        .kop .kementerian { font-size: 16px; font-weight: bold; margin: 0; text-align: center; }
-        .kop .institut { font-size: 22px; font-weight: bold; margin: 0; text-align: center; }
-        .kop .alamat { margin: 4px 0; text-align: center; font-size: 13px; }
-        .kop .kontak { margin: 4px 0; text-align: center; font-size: 13px; }
+        .kop .kementerian { font-size: 18px; font-weight: bold; margin: 0; text-align: center; }
+        .kop .institut { font-size: 24px; font-weight: bold; margin: 0; text-align: center; }
+        .kop .alamat { margin: 4px 0; text-align: center; font-size: 14px; }
+        .kop .kontak { margin: 4px 0; text-align: center; font-size: 14px; }
         table { margin: 18px 0; }
         td { padding: 4px 8px; vertical-align: top; }
         .ttd { width: 260px; margin-left: auto; margin-top: 50px; text-align: center; }
